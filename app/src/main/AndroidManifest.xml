@@ -31,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ContentActivity"/>
+        <activity android:name=".activity.GuideActivity"/>
 
         <!--share sdk   begin-->
         <!--微信分享回调 -->

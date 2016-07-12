@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerInParent="true"
    >
-    <ImageView
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_splash_highlight"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="这是重要的内容界面"/>
 </RelativeLayout>
