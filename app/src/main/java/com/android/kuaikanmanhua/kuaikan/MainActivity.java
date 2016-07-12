@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
-    private void initHideSystemUi() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                // remove the following flag for version < API 19
-                | View.SYSTEM_UI_FLAG_IMMERSIVE);
-    }
     //          耗时任务在子线程中进行
     Runnable runnable = new Runnable() {
         @Override

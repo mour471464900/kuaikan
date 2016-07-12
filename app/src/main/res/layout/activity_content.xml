@@ -13,7 +13,9 @@
         android:layout_weight="1" />
 
     <RadioGroup
+        android:background="#ffffff"
         android:id="@+id/rg_main"
+        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -24,7 +26,6 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/slt_rb_zhongyao"
-            android:gravity="center"
             />
         <RadioButton
             android:id="@+id/rb_production"
@@ -33,7 +34,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/slt_rb_zuoping"
-            android:gravity="center" />
+           />
         <RadioButton
             android:id="@+id/rb_comment"
             android:layout_width="wrap_content"
@@ -41,7 +42,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/slt_rb_pinglun"
-            android:gravity="center" />
+          />
         <RadioButton
             android:id="@+id/rb_user"
             android:layout_width="wrap_content"
@@ -49,7 +50,6 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableTop="@drawable/slt_rb_user"
-            android:gravity="center"
         />
     </RadioGroup>
 </LinearLayout>
