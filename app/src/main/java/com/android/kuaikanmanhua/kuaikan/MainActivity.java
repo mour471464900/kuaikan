@@ -19,7 +19,8 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences sp;
+
+    private SharedPreferences  sp;
     private SharedPreferences.Editor editor;
     private Thread thread;
     public static final int SKIP_GUIDE = 1;
