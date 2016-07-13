@@ -64,6 +64,7 @@ public class ContentActivity extends AppCompatActivity {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fl_main_content, fragmentList.get(0));
         transaction.commit();
+        //hahaha
     }
 
     private void initFragment() {
