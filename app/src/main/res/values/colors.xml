@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#FFFFE940</color>
     <color name="colorAccent">#FFFFE940</color>
     <color name="colorContent">#FFFFE940</color>
+    <color name="darker_gray">#d1d0ca</color>
     <!-- color content 是app的主题颜色-->
 </resources>
