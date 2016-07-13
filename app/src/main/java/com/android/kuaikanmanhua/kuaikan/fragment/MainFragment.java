@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.android.kuaikanmanhua.kuaikan.R;
 
 /*
-
    这是引导页面进入之后的情况
    吴浩，先完成这个
  */

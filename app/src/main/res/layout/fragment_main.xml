@@ -1,15 +1,45 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerInParent="true"
-    tools:context="com.android.kuaikanmanhua.kuaikan.fragment.MainFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="30dp"
+    android:orientation="vertical"
+ >
+    <RelativeLayout
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:layout_width="150dp"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+            <RadioButton
+                style="@style/rb_top"
+                android:text="关注"
+                android:id="@+id/rb_guanzhu_top"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                style="@style/rb_top"
+                android:text="更新"
+                android:id="@+id/rb_gengxing_top"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:checked="false" />
+        </RadioGroup>
+        <ImageView
+            android:id="@+id/iv_mainfragment_search"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_home_nav_search_pressed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fl_main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="这是主界面的Fragment" />
-
-</FrameLayout>
+        />
+</LinearLayout>

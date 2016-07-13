@@ -62,7 +62,7 @@
         ]
     },
     {
-        "outputFile": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
+        "outputFile": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
         "map": [
             {
                 "to": {
@@ -73,7 +73,7 @@
                     "endOffset": 118
                 },
                 "from": {
-                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -92,7 +92,7 @@
                     "endOffset": 185
                 },
                 "from": {
-                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -111,7 +111,7 @@
                     "endOffset": 256
                 },
                 "from": {
-                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -248,7 +248,7 @@
         ]
     },
     {
-        "outputFile": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
+        "outputFile": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-iw\\values-iw.xml",
         "map": [
             {
                 "to": {
@@ -259,7 +259,7 @@
                     "endOffset": 118
                 },
                 "from": {
-                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -278,7 +278,7 @@
                     "endOffset": 185
                 },
                 "from": {
-                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -297,7 +297,7 @@
                     "endOffset": 256
                 },
                 "from": {
-                    "file": "D:\\Buffer\\GiftsSprite\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
+                    "file": "D:\\AndroidStudioProjects\\kuaikan\\library\\build\\intermediates\\bundles\\debug\\res\\values-iw\\values-iw.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
