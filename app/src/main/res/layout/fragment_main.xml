@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RadioGroup
+            android:id="@+id/rg_top"
             android:layout_width="150dp"
             android:orientation="horizontal"
             android:layout_centerInParent="true"
@@ -19,8 +20,8 @@
                 android:id="@+id/rb_guanzhu_top"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:checked="true"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:checked="false" />
             <RadioButton
                 style="@style/rb_top"
                 android:text="更新"
@@ -28,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:checked="false" />
+                android:checked="true" />
         </RadioGroup>
         <ImageView
             android:id="@+id/iv_mainfragment_search"
