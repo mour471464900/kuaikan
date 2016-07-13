@@ -84,7 +84,6 @@ public class MainUpdateFragment extends Fragment {
             //设置Tab内容:tab.setText(内容);
             mTab.addTab(mTab.newTab().setText(titleList.get(i)));
         }
-//        在三星，手机上面，可以不用这段代码，其余的机型要加上去
     }
 
     private void bindAdapter() {
@@ -112,6 +111,7 @@ public class MainUpdateFragment extends Fragment {
         Date date=new Date();
         String now = myFmt.format(date);
 //        匹配今天是星期几，然后动态加入星期几
+//        有的机型是周几
         List<String> mList=new ArrayList<>();
         switch (now){
             case "星期一":
@@ -135,6 +135,7 @@ public class MainUpdateFragment extends Fragment {
             case "星期日":
                 mList.addAll(getDay(day7));
                 break;
+//            此处应该动态用英文来判断
             case "周一":
                 mList.addAll(getDay(day1));
                 break;
