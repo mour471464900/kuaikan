@@ -28,14 +28,10 @@ import butterknife.ButterKnife;
  *  这个是主要的 内容的activity *
  *  这是重要内容，里面有主要的四个fragment
  *
- *
- * **/
+*/
 public class ContentActivity extends AppCompatActivity {
-
-
     @BindView(R.id.rg_main)
     RadioGroup rgBottom;
-
     private List<Fragment> fragmentList = new ArrayList<>();
     private RadioButton[] rbChilds;
     private long exitTime;
