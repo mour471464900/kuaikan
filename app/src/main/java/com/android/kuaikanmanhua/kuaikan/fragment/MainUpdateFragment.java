@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import com.android.kuaikanmanhua.kuaikan.R;
 
 /**
- *
- *这是主页里面 更新的fragment
+ * 这是主页里面 更新的fragment
  */
 public class MainUpdateFragment extends Fragment {
 
-    // TODO: Rename and change types and number of parameters
+    private int[] urlNums = {
+            0,    1, 1467993600, 1467907200, 1467820800, 1467734400, 1467648000
+//          今天，昨天 ，动态1     ,动态2,         动态3,       动态4,      动态5
+    };
+
     public static MainUpdateFragment newInstance(Bundle args) {
         MainUpdateFragment fragment = new MainUpdateFragment();
         fragment.setArguments(args);
@@ -24,7 +27,7 @@ public class MainUpdateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_updata, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_updata, container, false);
+        return view;
     }
 }
