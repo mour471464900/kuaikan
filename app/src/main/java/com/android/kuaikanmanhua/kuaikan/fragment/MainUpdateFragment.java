@@ -73,6 +73,16 @@ public class MainUpdateFragment extends Fragment {
 //       初始化适配器
         bindAdapter();
 //        判定适配器
+        initTableList();
+//       初始化tableLayout的上方的文字
+    }
+
+    private void initTableList() {
+        for (int i = 0; i < titleList.size(); i++) {
+            //创建Tab:mTabLayout.newTab()
+            //设置Tab内容:tab.setText(内容);
+            mTab.addTab(mTab.newTab().setText(titleList.get(i)));
+        }
     }
 
     private void bindAdapter() {
