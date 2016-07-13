@@ -82,6 +82,7 @@ public class MainUpdateFragment extends Fragment {
             //创建Tab:mTabLayout.newTab()
             //设置Tab内容:tab.setText(内容);
             mTab.addTab(mTab.newTab().setText(titleList.get(i)));
+
         }
     }
 
