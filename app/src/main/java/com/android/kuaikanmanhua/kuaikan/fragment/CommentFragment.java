@@ -29,7 +29,13 @@ public class CommentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //初始化视图
+        initView();
         return inflater.inflate(R.layout.fragment_comment, container, false);
+    }
+
+    private void initView() {
+
     }
 
 }
