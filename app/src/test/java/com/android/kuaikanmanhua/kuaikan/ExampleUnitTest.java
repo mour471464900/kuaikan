@@ -1,5 +1,9 @@
 package com.android.kuaikanmanhua.kuaikan;
 
+import com.android.kuaikanmanhua.kuaikan.common.SevenDayUrl;
+import com.android.kuaikanmanhua.kuaikan.fragment.MainUpdateFragment;
+import com.android.kuaikanmanhua.kuaikan.util.HttpUtilNow;
+
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +16,6 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        SimpleDateFormat dateFormat=new SimpleDateFormat();
+
     }
 }
