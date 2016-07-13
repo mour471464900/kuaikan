@@ -111,7 +111,7 @@ public class MainUpdateFragment extends Fragment {
         Date date=new Date();
         String now = myFmt.format(date);
 //        匹配今天是星期几，然后动态加入星期几
-//        有的机型是周几
+//        有的机型是周几 ，三星的机型是星期几
         List<String> mList=new ArrayList<>();
         switch (now){
             case "星期一":
@@ -157,6 +157,7 @@ public class MainUpdateFragment extends Fragment {
             case "周日":
                 mList.addAll(getDay(day7));
                 break;
+//
         }
         return mList;
     }
