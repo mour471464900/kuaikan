@@ -80,8 +80,6 @@ public class MainUpdateFragment extends Fragment {
 //        设置tablayout 到最后一个位置
         mTab.setupWithViewPager(mViewPager);
 //        将viewpager关联起来
-       mTab.setScrollPosition(urlNum.length,1,true);
-
     }
 
     private void initAdapter() {
