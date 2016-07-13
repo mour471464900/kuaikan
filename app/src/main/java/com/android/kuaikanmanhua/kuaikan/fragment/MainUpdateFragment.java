@@ -69,12 +69,13 @@ public class MainUpdateFragment extends Fragment {
     private void setupViewPager() {
         initData();
 //      初始化数据
+        initTableList();
+//       初始化tableLayout的上方的文字
         initAdapter();
 //       初始化适配器
         bindAdapter();
 //        判定适配器
-        initTableList();
-//       初始化tableLayout的上方的文字
+
     }
 
     private void initTableList() {
@@ -83,7 +84,7 @@ public class MainUpdateFragment extends Fragment {
             //设置Tab内容:tab.setText(内容);
             mTab.addTab(mTab.newTab().setText(titleList.get(i)));
         }
-//        在三星，手机上面，可以不用这段代码
+//        在三星，手机上面，可以不用这段代码，其余的机型要加上去
     }
 
     private void bindAdapter() {
@@ -132,6 +133,27 @@ public class MainUpdateFragment extends Fragment {
                 mList.addAll(getDay(day6));
                 break;
             case "星期日":
+                mList.addAll(getDay(day7));
+                break;
+            case "周一":
+                mList.addAll(getDay(day1));
+                break;
+            case "周二":
+                mList.addAll(getDay(day2));
+                break;
+            case "周三":
+                mList.addAll(getDay(day3));
+                break;
+            case "周四":
+                mList.addAll(getDay(day4));
+                break;
+            case "周五":
+                mList.addAll(getDay(day5));
+                break;
+            case "周六":
+                mList.addAll(getDay(day6));
+                break;
+            case "周日":
                 mList.addAll(getDay(day7));
                 break;
         }
