@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      >
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@mipmap/ic_launcher"
+      />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="皮蛋"
+        />
+  </LinearLayout>
+    <TextView
+        android:id="@+id/tv_hot_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="想让狮子教你弹钢琴咩"
+        />
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+
+        >
+
+    </GridView>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:gravity="center_vertical"
+      >
+
+
+<TextView
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:text="07-12 17:12"
+    />
+
+
+       />
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableLeft="@drawable/ic_details_toolbar_praise_normal"
+      android:text="5095"
+       android:layout_marginRight="10dp"
+      />
+    <TextView
+        android:id="@+id/tv_hot_look"
+
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_home_comment_normal"
+        android:text="1726"/>
+  </LinearLayout>
+</LinearLayout>
+
+
+
+
