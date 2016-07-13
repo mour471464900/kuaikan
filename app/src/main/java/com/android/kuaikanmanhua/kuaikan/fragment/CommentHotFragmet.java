@@ -23,7 +23,8 @@ public class CommentHotFragmet extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View view=inflater.inflate(R.layout.comment_hot_fragment,container,false);
-       initData();
+       //初始化数据
+        initData();
         return view;
     }
 
