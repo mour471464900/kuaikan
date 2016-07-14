@@ -1,11 +1,18 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.MediaMetadataCompat;
@@ -14,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,7 +58,7 @@ public class SevenDayFragment extends Fragment {
     //    sevenday的实体类
     private ProgressDialog dialog;
 
-    private List<SevenDayBean.DataBean.ComicsBean> mList=new ArrayList<>();
+    private List<SevenDayBean.DataBean.ComicsBean> mList = new ArrayList<>();
     //    实现的实体类
     @BindView(R.id.pull_to_refresh_listview)
     PullToRefreshListView mListView;
@@ -70,7 +78,6 @@ public class SevenDayFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getInt("id", 0);
-           Toast.makeText(context,"id="+ id, Toast.LENGTH_SHORT).show();
         }
 //        将外部导入的bundle 传入到此fragment中去
     }
@@ -87,8 +94,6 @@ public class SevenDayFragment extends Fragment {
 
     //
     private void setupListView() {
-        mListView.setMode(PullToRefreshBase.Mode.BOTH);
-//        设置上下拉都能使用
         refreshableView = mListView.getRefreshableView();
         initDialog();
 //    出书啊弹窗
@@ -100,52 +105,61 @@ public class SevenDayFragment extends Fragment {
 //        绑定适配器
         initFootView();
 //        给listview 加载底部
-        initRefreListener();
+        initRefreshListener();
 //        刷新的监听
         initClickListener();
 //        点击监听
     }
-//     item 的点击监听
+
+    //     item 的点击监听
     private void initClickListener() {
         refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              Intent intent=new Intent(getActivity(), FullscreenActivity.class);
+                Intent intent = new Intent(getActivity(), FullscreenActivity.class);
                 startActivity(intent);
 //               这个要跳转到观看漫画的activity，是一个全屏的activity
             }
         });
     }
 
-    private void initRefreListener() {
-      mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-          @Override
-          public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-              OkHttpTool.newInstance().start(SevenDayUrl.DAY_START + id + SevenDayUrl.DAY_END).callback(new IOKCallBack() {
-                  @Override
-                  public void success(String result) {
-                      Gson gson = new Gson();
+    private void initRefreshListener() {
+//
+        mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                  下拉刷新
+                OkHttpTool.newInstance().start(SevenDayUrl.DAY_START + id + SevenDayUrl.DAY_END).callback(new IOKCallBack() {
+                    @Override
+                    public void success(String result) {
+                        Gson gson = new Gson();
 //                加载界面的实体类
-                      sevenDayBean = gson.fromJson(result, SevenDayBean.class);
-                      if (sevenDayBean != null && sevenDayBean.getData() != null) {
-                          mList.addAll(sevenDayBean.getData().getComics());
-                          sevenAdapter.notifyDataSetChanged();
+                        SevenDayBean sevenDayBean = gson.fromJson(result, SevenDayBean.class);
+                        if (sevenDayBean != null && sevenDayBean.getData() != null) {
+                            mList.addAll(sevenDayBean.getData().getComics());
+                            mList = new ArrayList<SevenDayBean.DataBean.ComicsBean>();
+//                            重新new 对象 让其获得新的加载数据
+                            sevenAdapter.notifyDataSetChanged();
 //                    异步加载数据，
-                          dialog.dismiss();
+                            dialog.dismiss();
 //                   dialog消失
-                          mListView.onRefreshComplete();
-//                          刷新完成之后
-                      }
-                  }
-              });
-          }
-      });
+                        }
+                        mListView.onRefreshComplete();
+//                          刷新完成之后,listview就消失
+                    }
+                });
+            }
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+            }
+        });
+
     }
 
     private void initFootView() {
         footView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.item_foot_seven_listview,null);
-         refreshableView.addFooterView(footView);
+                .inflate(R.layout.item_foot_seven_listview, null);
+        refreshableView.addFooterView(footView);
     }
 
     private void initDialog() {
@@ -201,19 +215,25 @@ public class SevenDayFragment extends Fragment {
         /**
          * 这个适配器里面改变了控件
          **/
+        @TargetApi(Build.VERSION_CODES.M)
         @Override
-        public void convert(ViewHolderM holderM, SevenDayBean.DataBean.ComicsBean bean) {
+        public void convert(ViewHolderM holderM, final SevenDayBean.DataBean.ComicsBean bean) {
             TextView lable = (TextView) holderM.getView(R.id.tv_seven_lable);
             TextView top_title = (TextView) holderM.getView(R.id.tv_seven_top_title);
             TextView top_avatar = (TextView) holderM.getView(R.id.tv_seven_top_avatar);
             TextView bottom_title = (TextView) holderM.getView(R.id.tv_seven_bottom_title);
-            CheckBox dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
+            final CheckBox dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
             CheckBox pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
             ImageView cover = (ImageView) holderM.getView(R.id.iv_seven_cover);
+//            改变Ui控件
 //            --------------------
             lable.setText(bean.getLabel_text()); // 改变文字
-            lable.setBackgroundColor(Color.parseColor(bean.getLabel_color()));
+//            lable.setBackgroundColor(Color.parseColor(bean.getLabel_color()));
 //             改变颜色
+            Drawable background = lable.getBackground();
+//bean.getLabel_color()这是一个十六进制的颜色配置    "label_color":"#fa6499",
+            background.setColorFilter(Color.parseColor(bean.getLabel_color()), PorterDuff.Mode.SRC);
+            //这个是颜色过滤器，来改变drawable 的颜色
             top_title.setText(bean.getTopic().getTitle());
             top_avatar.setText(bean.getTopic().getUser().getNickname());
             bottom_title.setText(bean.getTitle());
@@ -221,6 +241,27 @@ public class SevenDayFragment extends Fragment {
             pinlun.setText("" + bean.getComments_count());
             Picasso.with(getActivity()).load(bean.getCover_image_url()).into(cover);
 //            改变控件
+//            ----------作者的点击---------
+            top_avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), "点击了作者", Toast.LENGTH_SHORT).show();
+                }
+            });
+//            ------点赞按钮的点击--------
+            dianzhan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    dianzhan.setText(""+(bean.getLikes_count()+1));
+                }
+            });
+           pinlun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+               @Override
+               public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                   Toast.makeText(getActivity(),"00",Toast.LENGTH_LONG).show();
+               }
+           });
+
         }
     }
 

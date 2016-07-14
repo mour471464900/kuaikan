@@ -49,7 +49,7 @@ public class CommentHotBean implements Serializable {
         this.message = message;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         private long current;
         private int pub_feed;
         private int since;
@@ -113,7 +113,7 @@ public class CommentHotBean implements Serializable {
             this.feeds = feeds;
         }
 
-        public static class FeedsBean {
+        public static class FeedsBean implements  Serializable {
             private int likes_count;
             private long updated_at;
 
@@ -264,7 +264,7 @@ public class CommentHotBean implements Serializable {
                 this.is_liked = is_liked;
             }
 
-            public static class UserBean {
+            public static class UserBean implements  Serializable {
                 private int pub_feed;
                 private String reg_type;
                 private String avatar_url;
@@ -334,7 +334,7 @@ public class CommentHotBean implements Serializable {
                 }
             }
 
-            public static class ContentBean {
+            public static class ContentBean  implements  Serializable{
                 private String identity;
                 private String image_base;
                 private String text;

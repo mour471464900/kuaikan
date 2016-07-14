@@ -60,7 +60,7 @@
     />
 
   <TextView
-      android:id="@+id/tv_hot_click"
+      android:id="@+id/tv_hot_likes_count"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:drawableLeft="@drawable/ic_details_toolbar_praise_normal"
@@ -68,7 +68,7 @@
        android:layout_marginRight="10dp"
       />
     <TextView
-        android:id="@+id/tv_hot_look"
+        android:id="@+id/tv_hot_comments_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_home_comment_normal"
