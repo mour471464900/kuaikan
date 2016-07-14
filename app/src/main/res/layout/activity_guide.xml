@@ -21,8 +21,8 @@
 
     <RadioButton
         android:id="@+id/rb_vp_into"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
         android:layout_above="@id/ll_vp_tag"
         android:layout_centerHorizontal="true"
         android:button="@null"/>

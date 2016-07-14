@@ -1,15 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.kuaikanmanhua.kuaikan.fragment.ProductionFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rg_production"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
+            <RadioButton
+                style="@style/rb_top"
+                android:text="热门"
+                android:id="@+id/rb_hot_top"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:layout_height="wrap_content"
+                />
+            <RadioButton
+                style="@style/rb_top"
+                android:text="分类"
+                android:id="@+id/rb_classify_top"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:checked="false" />
+        </RadioGroup>
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_find_nav_search_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fl_production"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="30dp"
-        android:text="作品的fragment
-        " />
-
-</FrameLayout>
+        />
+</LinearLayout>

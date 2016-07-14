@@ -66,8 +66,8 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
         //循环新建底部圆点，将生成的imageview保存到数组中
         for (int i = 0; i <mViewList.size() ; i++) {
             mImageView=new ImageView(this);
-            mImageView.setLayoutParams(new ViewGroup.LayoutParams(20,20));
-            mImageView.setPadding(30,0,30,0);
+            mImageView.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+            mImageView.setPadding(10,0,10,0);
             mImageViewArray[i]=mImageView;
             //第一个页面需要设置为选中状态，这里要使用两张不同的图片（选中与未选中）
             if(i==0){
