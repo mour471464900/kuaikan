@@ -77,6 +77,7 @@ public class CommentHotFragmet extends Fragment {
                 Intent intent = new Intent(getActivity(), CommentContextActivity.class);
                 intent.putExtra("bean", mlist.get(position));
                 startActivity(intent);
+
             }
         });
 
