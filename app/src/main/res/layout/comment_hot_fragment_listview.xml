@@ -10,12 +10,15 @@
       android:orientation="horizontal"
       android:gravity="center_vertical"
       >
-    <ImageView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_comment_hot_icon"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+        android:scaleType="centerCrop"
       android:src="@mipmap/ic_launcher"
       />
     <TextView
+        android:id="@+id/iv_comment_hot_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -27,33 +30,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="想让狮子教你弹钢琴咩"
+        android:textColor="#000000"
         />
-    <GridView
+    <com.android.kuaikanmanhua.kuaikan.custom.CustomGridView
+        android:id="@+id/gv_hot_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"
 
         >
 
-    </GridView>
+    </com.android.kuaikanmanhua.kuaikan.custom.CustomGridView>
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
       android:gravity="center_vertical"
+      android:layout_marginTop="3dp"
+      android:layout_marginBottom="3dp"
       >
 
 
 <TextView
+    android:id="@+id/tv_hot_data"
     android:layout_width="0dp"
     android:layout_weight="1"
     android:layout_height="wrap_content"
     android:text="07-12 17:12"
     />
 
-
-       />
   <TextView
+      android:id="@+id/tv_hot_click"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:drawableLeft="@drawable/ic_details_toolbar_praise_normal"
