@@ -16,4 +16,29 @@
         <item name="android:textColor">@color/color_rb_top</item>
         <item name="android:background">@drawable/sharp_rb_top</item>
     </style>
+    <!--  这个是上下的内容-->
+    <style name="LayoutMargin">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="custom_dianzhan" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/seletor_dianzhan</item>
+    </style>
+
+    <style name="custom_pinlun" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_pinlun</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
 </resources>

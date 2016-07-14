@@ -7,16 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.UpdatePagerAdapter;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,7 +23,7 @@ public class MainUpdateFragment extends Fragment {
 
     private int[] urlNum = {
             1467993600, 1467907200, 1467820800, 1467734400, 1467648000,   1,    0
-//           ，动态1     ,动态2,         动态3,       动态4,      动态5    ，昨天   今天
+//           ，动态1      ,动态2,         动态3,       动态4,      动态5    ，昨天   今天
     };
 
 //    周一到  周日  让 title 显示不同天数的数组
@@ -112,7 +108,6 @@ public class MainUpdateFragment extends Fragment {
         String now = myFmt.format(date);
 //        匹配今天是星期几，然后动态加入星期几
 //        有的机型是周几 ，三星的机型是星期几
-
         List<String> mList=new ArrayList<>();
         switch (now){
             case "星期一":
