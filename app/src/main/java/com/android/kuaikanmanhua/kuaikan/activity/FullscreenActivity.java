@@ -3,11 +3,13 @@ package com.android.kuaikanmanhua.kuaikan.activity;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-
+import android.widget.LinearLayout;
 import com.android.kuaikanmanhua.kuaikan.R;
 
 /**
@@ -79,6 +81,7 @@ public class FullscreenActivity extends Activity {
             return false;
         }
     };
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +107,6 @@ public class FullscreenActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
@@ -121,16 +123,31 @@ public class FullscreenActivity extends Activity {
 
     private void hide() {
         // Hide UI first
-        ActionBar actionBar = getActionBar();
+        actionBar = getActionBar();
+        initActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
         mControlsView.setVisibility(View.GONE);
         mVisible = false;
-
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+    }
+
+//
+    private void initActionBar() {
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        设置自定义的actionBar
+        LayoutInflater inflator = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflator.inflate(R.layout.custom_aciton_bar, new LinearLayout(this),
+                false);
+       ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
+               ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(v, layout);
     }
 
     @SuppressLint("InlinedApi")
@@ -139,7 +156,6 @@ public class FullscreenActivity extends Activity {
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mVisible = true;
-
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);

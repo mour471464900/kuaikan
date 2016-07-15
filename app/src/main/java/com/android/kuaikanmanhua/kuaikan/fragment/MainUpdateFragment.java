@@ -87,6 +87,9 @@ public class MainUpdateFragment extends Fragment {
 //        设置tablayout 到最后一个位置
         mTab.setupWithViewPager(mViewPager);
 //        将viewpager关联起来
+        mViewPager.setCurrentItem(urlNum.length);
+//        设置viewpager的设置选中项
+//        刚进入的设置到 tab 到:今天，
     }
 
     private void initAdapter() {

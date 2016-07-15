@@ -35,7 +35,6 @@ public class MainFragment extends Fragment {
     private List<Fragment> fragmentList = new ArrayList<>();
     private RadioButton[] rbChilds;
     private int preIndex=1;
-
     public static MainFragment newInstance(Bundle args) {
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);

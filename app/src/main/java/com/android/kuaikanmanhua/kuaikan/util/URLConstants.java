@@ -11,4 +11,12 @@ public class URLConstants {
     public static final String URL_CLASSIFY="http://api.kuaikanmanhua.com/v1/tag/suggestion";
 
 
+//  http://api.kuaikanmanhua.com/v1/comics/14133/hot_comments
+//     这是看漫画的页面的  下面的评论
+
+//    http://api.kuaikanmanhua.com/v1/comics/14133
+//    这是  看漫画的主要页面
+
+
+
 }

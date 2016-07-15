@@ -32,6 +32,8 @@
             android:layout_toRightOf="@+id/tv_seven_lable"
             android:id="@+id/tv_seven_top_title"
             android:layout_width="wrap_content"
+            android:maxEms="10"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:textColor="#5c555c"
             android:layout_centerVertical="true"
