@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity">
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="160dp"
+     android:background="@drawable/bg_personal"
+
+     >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_collection_pre_normal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+     <ImageView
+         android:id="@+id/iv_comment_icon_picture"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_personal_headportrait"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="10dp"
+         />
+     <TextView
+         android:id="@+id/tv_comment_attestation"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="认证：快看漫画签约作者，代表作《黎明有星辰》"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="20dp"
+         />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="福特"
+         android:layout_centerHorizontal="true"
+         android:layout_above="@id/tv_comment_attestation"
+         android:layout_marginBottom="5dp"
+         />
+     </RelativeLayout>
+</LinearLayout>
