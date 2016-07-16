@@ -1,16 +1,19 @@
 package com.android.kuaikanmanhua.kuaikan.activity;
-
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import com.android.kuaikanmanhua.kuaikan.R;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -35,17 +38,15 @@ public class FullscreenActivity extends Activity {
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
-    private View mContentView;
+    private ListView mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
             mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                    );
         }
     };
     private View mControlsView;
@@ -58,6 +59,8 @@ public class FullscreenActivity extends Activity {
                 actionBar.show();
             }
             mControlsView.setVisibility(View.VISIBLE);
+//            设置出现
+            myView.setVisibility(View.VISIBLE);
         }
     };
     private boolean mVisible;
@@ -81,36 +84,58 @@ public class FullscreenActivity extends Activity {
             return false;
         }
     };
-    private ActionBar actionBar;
+    private View myView;
+//   这是我自身的view
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_fullscreen);
+
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
+//        这个是被隐藏的控件
+        mContentView = (ListView)findViewById(R.id.fullscreen_content);
+//        这个是被点击控件 ，view
+//        自定义显示 和隐藏 布局
+        myView = findViewById(R.id.info_Bar);
+        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+
+
+
+
+        List<String > list=new ArrayList<>();
+        for (int i = 0; i <100 ; i++) {
+            list.add("tian "+i);
+        }
+
+        ArrayAdapter<String > adapter=new ArrayAdapter<String>
+                (this,android.R.layout.simple_expandable_list_item_1,list);
+//        当点击那个就执行隐藏或者 收起
+        mContentView.setAdapter(adapter);
+        mContentView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 toggle();
+//              显示状态栏和隐藏
             }
         });
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
+
+
+
+
+//    ---------------下面的代码请不要改变-----------------
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
         delayedHide(100);
+//        在0.1秒的时间让控件显示
     }
 
     private void toggle() {
@@ -123,48 +148,31 @@ public class FullscreenActivity extends Activity {
 
     private void hide() {
         // Hide UI first
-        actionBar = getActionBar();
-        initActionBar();
+//          设置ui 控件 隐藏
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
         mControlsView.setVisibility(View.GONE);
+        myView.setVisibility(View.GONE);
+//        设置隐藏
         mVisible = false;
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
-
-//
-    private void initActionBar() {
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        设置自定义的actionBar
-        LayoutInflater inflator = (LayoutInflater) this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflator.inflate(R.layout.custom_aciton_bar, new LinearLayout(this),
-                false);
-       ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
-               ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(v, layout);
-    }
-
-    @SuppressLint("InlinedApi")
+    //    这个是控制   显示ui 控件的方法
     private void show() {
         // Show the system bar
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        mContentView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mVisible = true;
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
+
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);

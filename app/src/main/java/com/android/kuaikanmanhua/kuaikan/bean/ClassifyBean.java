@@ -1,11 +1,12 @@
 package com.android.kuaikanmanhua.kuaikan.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/14.
  */
-public class ClassifyBean {
+public class ClassifyBean implements Serializable{
 
     /**
      * code : 200
@@ -41,7 +42,7 @@ public class ClassifyBean {
         this.message = message;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * icon : http://i.kuaikanmanhua.com/image/150814/4z3820v4q.jpg-w200
          * priority : 14
@@ -59,7 +60,7 @@ public class ClassifyBean {
             this.suggestion = suggestion;
         }
 
-        public static class SuggestionBean {
+        public static class SuggestionBean implements Serializable{
             private String icon;
             private int priority;
             private int tag_id;

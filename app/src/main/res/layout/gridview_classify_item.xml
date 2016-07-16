@@ -5,30 +5,31 @@
     android:gravity="center"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:descendantFocusability="blocksDescendants"
     android:layout_margin="5dp">
   <LinearLayout
       android:orientation="vertical"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content">
 
-
       <de.hdodenhof.circleimageview.CircleImageView
           android:id="@+id/iv_classify_icon"
-          android:layout_width="100dip"
-          android:layout_height="100dip"
-          android:layout_margin="3.0dip"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="3.0dp"
           android:src="@drawable/ic_launcher"
           android:scaleType="centerCrop"
-          android:padding="3.0dip" />
+          android:padding="3.0dp" />
 
       <TextView
           android:text="优秀新连载"
           android:id="@+id/tv_classify_name"
-          android:textSize="12sp"
+          android:textSize="15sp"
           android:maxLines="1"
           android:layout_gravity="center"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content" />
-
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"/>
   </LinearLayout>
+
 </RelativeLayout>

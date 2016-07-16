@@ -1,6 +1,7 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.activity.SearchActivity;
 
 
 import java.util.ArrayList;
@@ -30,6 +33,9 @@ public class ProductionFragment extends Fragment {
 
     @BindView(R.id.rg_production)
     RadioGroup mRadioGroup;
+    @BindView(R.id.iv_search)
+    ImageView mSearch;
+
 
     private RadioButton[] rbChilds;
     private List<Fragment> mFragmentList=new ArrayList<>();
@@ -84,6 +90,14 @@ public class ProductionFragment extends Fragment {
                         switchFragment(i);
                     }
                 }
+            }
+        });
+
+        mSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }
