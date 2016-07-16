@@ -21,7 +21,7 @@
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
-
+<!--   这个是checkBox的-->
     <style name="custom_dianzhan" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/seletor_dianzhan</item>
     </style>
@@ -36,9 +36,15 @@
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+
     </style>
 
     <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@color/black_overlay</item>
+    </style>
+    <!--解决自定义actionbar的时候，左边始终有一块填充不掉的问题-->
+    <style name="ActionBarBaseStyle" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
     </style>
 </resources>
