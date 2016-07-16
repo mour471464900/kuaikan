@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.android.kuaikanmanhua.kuaikan.activity.BannerActivity">
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="广告详情界面"
+        android:text="这是广告监听"
         android:gravity="center"/>
 
 
-</RelativeLayout>
+</LinearLayout>

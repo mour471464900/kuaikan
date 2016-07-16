@@ -123,14 +123,7 @@ public class FullscreenActivity extends Activity {
 //              显示状态栏和隐藏
             }
         });
-        mContentView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(oldScrollY<scrollY){
-                    toggle();
-                }
-            }
-        });
+
     }
 
 

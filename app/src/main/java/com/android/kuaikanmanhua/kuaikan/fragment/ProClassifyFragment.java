@@ -1,11 +1,13 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.activity.ClassifyInfoActivity;
 import com.android.kuaikanmanhua.kuaikan.bean.ClassifyBean;
 import com.android.kuaikanmanhua.kuaikan.custom.CustomGridView;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
@@ -31,7 +34,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by my on 2016/7/13.
+ * 作品分类界面
  */
 public class ProClassifyFragment extends Fragment{
 
@@ -74,6 +77,17 @@ public class ProClassifyFragment extends Fragment{
     }
 
     private void initListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(getActivity(),ClassifyInfoActivity.class);
+                ClassifyBean.DataBean.SuggestionBean suggestionBean=mList.get(position);
+                intent.putExtra("id",suggestionBean);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 

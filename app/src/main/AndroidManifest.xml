@@ -36,7 +36,10 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <activity android:name=".activity.GuideActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
-
+        <activity android:name=".activity.ClassifyInfoActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".activity.SearchActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
         <!-- share sdk   begin -->
         <!-- 微信分享回调 -->
         <activity
