@@ -26,4 +26,10 @@ public class SevenDayUrl {
     public static final String URL_COMMENT_RECENTLY="http://api.kuaikanmanhua.com/v1/feeds/feed_lists?uid=&since=&page_num=1&catalog_type=1"  ;
 
 //这是评论最新链接
+
+    //热门跳转后的链接
+ //   http://api.kuaikanmanhua.com/v1/comments/feed/16386219085176832/order/time?offset=0&limit=20
+public static final String  COMMENT_START_HOT_CONTEXT ="http://api.kuaikanmanhua.com/v1/comments/feed/";
+    public static final String  COMMENT_END_HOT_CONTEXT="/order/time?offset=0&limit=20";
+
 }

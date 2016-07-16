@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context="com.android.kuaikanmanhua.kuaikan.activity.CommentReplyActivity">
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:padding="10dp"
+     >
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/ic_nav_delete"
+         />
+     <RadioGroup
+         android:id="@+id/rg_hot_reply"
+         android:layout_width="150dp"
+         android:layout_height="wrap_content"
+         android:layout_centerInParent="true"
+         android:orientation="horizontal"
+         >
+         <RadioButton
+             android:id="@+id/rb_comment_hot_1"
+             android:background="@drawable/sharp_rb_reply"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:layout_height="wrap_content"
+             android:text="最新评论"
+             android:gravity="center"
+             android:button="@null"
+
+             />
+         <RadioButton
+             android:id="@+id/rb_comment_hot_2"
+             android:background="@drawable/sharp_rb_reply"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:text="最热评论"
+             android:button="@null"
+             android:gravity="center"
+
+             />
+     </RadioGroup>
+ </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_hot_reply"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        >
+
+    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/darker_gray"
+
+        android:gravity="center_vertical"
+        >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minEms="18"
+            android:hint="写评论"
+            android:textSize="15sp"
+          android:padding="8dp"
+         android:background="@drawable/shape_ed_reply"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

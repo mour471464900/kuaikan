@@ -18,6 +18,7 @@
          android:layout_height="wrap_content"
          android:src="@drawable/ic_up_indicator"
          android:layout_marginLeft="10dp"
+         android:onClick="onBack"
          />
       <TextView
           android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
           />
   </RelativeLayout>
     <ListView
+        android:id="@+id/lv_comment_hot_context_listview"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"

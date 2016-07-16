@@ -203,22 +203,15 @@ public class CommentZuiXinFragment extends Fragment {
                 list.addAll(mlist.get(position).getContent().getImages());
             }
 
-            int layoutId=0;
-
-            if(list.size()!=1){
-                layoutId =R.layout.comment_hot_fragment_gridview;
-
+            int layoutId = 0;
+            if(list.size()==1){
+                viewHolder.gv_picture.setNumColumns(1);
+                layoutId = R.layout.comment_hot_fragment_gridview2;
             }else {
-                layoutId=R.layout.comment_hot_fragment_gridview2;
-
-
-//                int   colnum  =  (int) (((getResources().getDisplayMetrics().widthPixels  ))/600  );
-//                viewHolder.gv_picture.setNumColumns(colnum);
-
-
-
-
+                viewHolder.gv_picture.setNumColumns(3);
+                layoutId = R.layout.comment_hot_fragment_gridview;
             }
+
             gridViewAdapter=new HotGridViewAdapter(getActivity(),layoutId,list);
             viewHolder.gv_picture.setAdapter(gridViewAdapter);
             gridViewAdapter.notifyDataSetChanged();
