@@ -89,18 +89,16 @@
         <!-- 全屏 -->
         <activity
             android:name=".activity.FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:process=":picture"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            />
         <!-- 全屏 -->
-        <activity android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            />
-        <!-- 热门回复界面-->
-        <activity android:name=".activity.MainReplyActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <!-- 热门回复界面 -->
+        <activity
+            android:name=".activity.MainReplyActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>
 
 </manifest>
