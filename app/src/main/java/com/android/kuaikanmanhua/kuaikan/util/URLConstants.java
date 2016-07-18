@@ -5,14 +5,14 @@ package com.android.kuaikanmanhua.kuaikan.util;
  */
 public class URLConstants {
     //广告
-    public static final String URL_BANNER="http://api.kuaikanmanhua.com/v1/banners";
+    public static final String URL_BANNER = "http://api.kuaikanmanhua.com/v1/banners";
 
     //热门除了广告外的
-    public static final String URL_OTHER="http://api.kuaikanmanhua.com/v1/topic_lists/mixed/new";
+    public static final String URL_OTHER = "http://api.kuaikanmanhua.com/v1/topic_lists/mixed/new";
     //分类
-    public static final String URL_CLASSIFY="http://api.kuaikanmanhua.com/v1/tag/suggestion";
+    public static final String URL_CLASSIFY = "http://api.kuaikanmanhua.com/v1/tag/suggestion";
     //分类的点击
-    public static final String URL_CLASSIFYINFO="http://api.kuaikanmanhua.com/v1/topics?offset=0&limit=20&tag=";
+    public static final String URL_CLASSIFYINFO = "http://api.kuaikanmanhua.com/v1/topics?offset=0&limit=20&tag=";
 
 
 //  http://api.kuaikanmanhua.com/v1/comics/14133/hot_comments
@@ -21,6 +21,20 @@ public class URLConstants {
 //    http://api.kuaikanmanhua.com/v1/comics/14133
 //    这是  看漫画的主要页面
 
+    public static final String URL_FULL_WATCH = "http://api.kuaikanmanhua.com/v1/comics/";
+    //       这个是跳转到看漫画的内容的主要  呈现图片的 界面
+    public static final String URL_FULL_COMMENT_START = "http://api.kuaikanmanhua.com/v1/comics/";
+    //    这个是热门评论的界面
+    public static final String URL_FULL_COMMENT_END = "/hot_comments";
 
 
+    //    最新评论
+    public static final String URL_ZUI_RE_START = "http://api.kuaikanmanhua.com/v1/comics/";
+    public static final String URL_ZUI_RE_END = "/comments/0?order=";
+//  http://api.kuaikanmanhua.com/v1/comics/14213/comments/0?order=
+
+    //    最热评论
+    public static final String URL_ZUI_XING_START = "http://api.kuaikanmanhua.com/v1/comics/";
+    public static final String URL_ZUI_XING_END = "/comments/0?order=score";
+//    http://api.kuaikanmanhua.com/v1/comics/14213/comments/0?order=score
 }

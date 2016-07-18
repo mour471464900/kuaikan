@@ -1,180 +1,426 @@
 package com.android.kuaikanmanhua.kuaikan.activity;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.adapter.FullFirstAdapter;
+import com.android.kuaikanmanhua.kuaikan.bean.CommentHotContextBean;
+import com.android.kuaikanmanhua.kuaikan.bean.FullWatchBean;
+import com.android.kuaikanmanhua.kuaikan.custom.CustomListView;
+import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
+import com.android.kuaikanmanhua.kuaikan.util.OkHttpTool;
+import com.android.kuaikanmanhua.kuaikan.util.URLConstants;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * 这个是全屏的 观看漫画的  主界面
  */
-public class FullscreenActivity extends Activity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
+public class FullscreenActivity extends Activity implements View.OnClickListener {
 
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
     private ListView mContentView;
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    );
-        }
-    };
     private View mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-//            设置出现
-            myView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
+
     private View myView;
+    private int id;
 //   这是我自身的view
+
+    //    评论的集合
+    private List<CommentHotContextBean.DataBean.CommentsBean>
+            sBean ;
+
+    //    图片的地址的集合
+    private List<String> images;
+    private FullFirstAdapter fullFirstAdapter;
+    private View header;
+    private TextView authur_name;
+    private ImageView icon_auther;
+    private View footView;
+    private TextView dianzhan;
+    private TextView pinglun;
+    private TextView next;
+    private TextView pre;
+    private FullWatchBean fullWatchBean;
+    private ImageView foot_icon;
+    private TextView foot_name;
+    private View footView2;
+    private CustomListView footListView;
+    private ProgressDialog dialog;
+    private TextView share;
+    private View footView3;
+    private TextView more;
+//      漫画的对象
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fullscreen);
+        setupListView();
+//        设置listview
+    }
 
-        mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-//        这个是被隐藏的控件
-        mContentView = (ListView)findViewById(R.id.fullscreen_content);
-//        这个是被点击控件 ，view
-//        自定义显示 和隐藏 布局
-        myView = findViewById(R.id.info_Bar);
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+    private void setupListView() {
+        initBundle();
+//        初始化bundle
+//    设置信息
+        initDialog();
+        initData();
+//        初始化数据
+        initView();
+//        初始化控件
+        initAdapter();
+//        初始化适配器
+        bindAdapter();
+//        绑定适配器
+        initListener();
+//        初始化监听
+        //        加载头部和底部视图
+        bindHeardFootView();
+    }
 
+    private void initDialog() {
+         dialog=new ProgressDialog(this);
+        dialog.setMessage("客官请骚等");
+    }
 
+    private void bindHeardFootView() {
+        mContentView.addHeaderView(header);
+        mContentView.addFooterView(footView);//第一个底部
+        mContentView.addFooterView(footView2);//加载第二个底部
+        mContentView.addFooterView(footView3);  // 加载第三个底部
+    }
 
-
-
-        List<String > list=new ArrayList<>();
-        for (int i = 0; i <100 ; i++) {
-            list.add("tian "+i);
-        }
-
-        ArrayAdapter<String > adapter=new ArrayAdapter<String>
-                (this,android.R.layout.simple_expandable_list_item_1,list);
-//        当点击那个就执行隐藏或者 收起
-        mContentView.setAdapter(adapter);
+    private void initListener() {
+        // 当点击那个就执行隐藏或者 收起
         mContentView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                toggle();
-//              显示状态栏和隐藏
+
             }
         });
+    }
+
+    private void bindAdapter() {
+        mContentView.setAdapter(fullFirstAdapter);
+    }
+
+    private void initAdapter() {
+        fullFirstAdapter = new FullFirstAdapter(this,
+                R.layout.full_item_image, images);
 
     }
 
+    private void initView() {
+        mControlsView = findViewById(R.id.fullscreen_content_controls);
+//        这个是被隐藏的控件
+        mContentView = (ListView) findViewById(R.id.fullscreen_content);
+//        这个是被点击控件 ，view
+//        自定义显示 和隐藏 布局
+        myView = findViewById(R.id.info_Bar);
+        initHeardFootView();
+//        初始化头部和尾的视图
+    }
 
+    //      初始化头部和底部
+    private void initHeardFootView() {
+//        头部布局
+        header = LayoutInflater.from(this).inflate(R.layout.full_auther_heard, null);
+//        头部的作者名
+        authur_name = (TextView) header.findViewById(R.id.tv_name_auther);
+//         头部的作者头像
+        icon_auther = (ImageView) header.findViewById(R.id.iv_icon_auther);
+//        第一个底部
+        footView = LayoutInflater.from(this).inflate(R.layout.full_foot_item1, null);
+        dianzhan = (TextView) footView.findViewById(R.id.tv_full_like);// 点赞的按钮
+        pinglun = (TextView) footView.findViewById(R.id.tv_full_comment);// 评论的按钮
+        pre = (TextView) footView.findViewById(R.id.tv_full_pre);// 上一篇的按钮
+        next = (TextView) footView.findViewById(R.id.tv_full_next);// 下一篇的按钮
+        foot_icon = (ImageView) footView.findViewById(R.id.iv_full_auther);// 底部的头像
+//          更新头和底部
+        foot_name= (TextView) footView.findViewById(R.id.tv_full_name);//底部的名字
 
+        share=(TextView)footView.findViewById(R.id.tv_full_share);
+//        分享的按键
+//        最后一个头部
+        footView2 = LayoutInflater.from(this).inflate(R.layout.full_foot_item2,null);
+        footListView=(CustomListView) footView2.findViewById(R.id.lv_foot_item);
+//        这是底部的评论的listview
+//         z最底部的加载更多
+         footView3=LayoutInflater.from(this).inflate(R.layout.full_foot_item3,null);
+              more =(TextView) footView3.findViewById(R.id.tv_more_comment);
+//          下面的控件
+    }
 
-//    ---------------下面的代码请不要改变-----------------
+    private void setupHFUI() {
+        Picasso.with(this).load(fullWatchBean.getData()
+                .getTopic().getUser().getAvatar_url()).into(icon_auther);
+        Picasso.with(this).load(fullWatchBean.getData()
+                .getTopic().getUser().getAvatar_url()).into(foot_icon);
+        authur_name.setText(fullWatchBean.getData().getTopic().getUser().getNickname());
+        foot_name.setText(fullWatchBean.getData().getTopic().getUser().getNickname());
+        dianzhan.setText(""+fullWatchBean.getData().getLikes_count());
+        pre.setOnClickListener(this);
+        next.setOnClickListener(this);
+        dianzhan.setOnClickListener(this);
+        pinglun.setOnClickListener(this);
+        icon_auther.setOnClickListener(this);
+        foot_icon.setOnClickListener(this);
+        share.setOnClickListener(this);
+//        一键 分享的功能
+        more.setOnClickListener(this);
+    }
 
+    //          通过网络请求得到图片的集合
+    private void initData() {
+        dialog.show();
+        if (id != 0) {
+            images = new ArrayList<>();
+            OkHttpTool.newInstance().start(URLConstants.URL_FULL_WATCH + id).callback(new IOKCallBack() {
+                @Override
+                public void success(String result) {
+                    Gson gson = new Gson();
+                    fullWatchBean = gson.fromJson(result, FullWatchBean.class);
+                    if (fullWatchBean != null && fullWatchBean.getData() != null) {
+                        images.addAll(fullWatchBean.getData().getImages());
+                        fullFirstAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        setupHFUI();
+                    }
+                }
+            });
+            setupFootListView();
+        }
+    }
+//    设置底部listview
+    private void setupFootListView() {
+//          更新评论页面
+        sBean=new ArrayList<>();
+        OkHttpTool.newInstance().start(URLConstants.URL_FULL_COMMENT_START+id+URLConstants.URL_FULL_COMMENT_END)
+                .callback(new IOKCallBack() {
+                    @Override
+                    public void success(String result) {
+                     Gson gson=new Gson();
+                        CommentHotContextBean commentHotContextBean = gson.fromJson(result, CommentHotContextBean.class);
+                        if(commentHotContextBean!=null){
+                            sBean.addAll(commentHotContextBean.getData().getComments());
+                            FootAdapter footAdapter = new FootAdapter();
+                            footListView.setAdapter(footAdapter);
+                            footAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
+    //     得到
+    private void initBundle() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            id = intent.getIntExtra("id", 0);//传入的是id值。14192
+        }
+    }
+
+    //   这是将毫秒转换成日期的方法
+    private String returnDate(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+        String now = sdf.format(new Date(time * 1000));
+        return now;
+    }
+
+    //  上方  返回键
+    public void backMain(View view) {
+        finish();
+    }
+
+    //   点击事件
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        delayedHide(100);
-//        在0.1秒的时间让控件显示
+    public void onClick(View v) {
+        switch (v.getId()) {
+//               上一篇
+            case R.id.tv_full_pre:
+                setupPreComic();
+                break;
+            case R.id.tv_full_next:
+                setupNextComic();
+                break;
+            case R.id.tv_full_like:
+                //需要登录
+                setupLogin();
+                break;
+            case R.id.tv_full_comment:
+                //需要登录
+                setupLogin();
+                break;
+            case R.id.iv_icon_auther:
+//                跳转作者
+                setupZuozhe();
+                break;
+            case R.id.iv_full_auther:
+//                跳转作者
+                setupZuozhe();
+                break;
+            case R.id.tv_full_share:
+//                跳转分享页面
+                setupShare();
+                Toast.makeText(FullscreenActivity.this, "点击了分享按钮", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_more_comment:
+//                跳转跟多评论的界面
+                setupMoreComment();
+                break;
+        }
+    }
+//    更多评论的对象
+    private void setupMoreComment() {
+        Intent intent =new Intent(this,MainReplyActivity.class);
+        intent.putExtra("id",fullWatchBean.getData().getId());
+        startActivity(intent);
     }
 
-    private void toggle() {
-        if (mVisible) {
-            hide();
+    //   分享的内容
+    private void setupShare() {
+        ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle("快看漫画");
+        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+        oks.setComment("我是测试评论文本");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://sharesdk.cn");
+// 启动分享GUI
+        oks.show(this);
+    }
+
+    //                跳转作者
+    private void setupZuozhe() {
+        int id = fullWatchBean.getData().getTopic().getUser().getId();
+        Intent intent =new Intent(this,CommentIconActivity.class);
+       intent.putExtra("bean",id);
+        startActivity(intent);
+    }
+    //需要登录
+    private void setupLogin() {
+        Intent intent =new Intent(this,LoginActivity.class);
+        startActivity(intent);
+    }
+
+    //     下一篇漫画
+    private void setupNextComic() {
+        Intent intent = new Intent(this, FullscreenActivity.class);
+        int next_comic_id = fullWatchBean.getData().getNext_comic_id();
+        if (next_comic_id != 0) {
+            intent.putExtra("id", (Integer)next_comic_id);
+            startActivity(intent);
         } else {
-            show();
+            Toast.makeText(this, "已经是最后一章", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void hide() {
-        // Hide UI first
-//          设置ui 控件 隐藏
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
+    //   上一篇漫画
+    private void setupPreComic() {
+        Intent intent = new Intent(this, FullscreenActivity.class);
+        if (fullWatchBean.getData().getNext_comic_id() != 0) {
+            intent.putExtra("id", (Integer) fullWatchBean.getData().getPrevious_comic_id());
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "只有一章", Toast.LENGTH_SHORT).show();
         }
-        mControlsView.setVisibility(View.GONE);
-        myView.setVisibility(View.GONE);
-//        设置隐藏
-        mVisible = false;
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
-    }
-    //    这个是控制   显示ui 控件的方法
-    private void show() {
-        // Show the system bar
-        mContentView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mVisible = true;
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
+    //       ---------这是底部评论的适配器---------
+    class FootAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return sBean == null ? 0 : sBean.size();
+        }
 
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+        @Override
+        public Object getItem(int position) {
+            return sBean.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(FullscreenActivity.this).
+                        inflate(R.layout.comment_context_list, null);
+                viewHolder = new ViewHolder();
+                viewHolder.iv_show = (CircleImageView) convertView.findViewById(R.id.iv_comment_hot_icon1);
+                viewHolder.tv_name = (TextView) convertView.findViewById(R.id.iv_comment_hot_name1);
+                viewHolder.tv_context = (TextView) convertView.findViewById(R.id.tv_hot_text1);
+                viewHolder.tv_data = (TextView) convertView.findViewById(R.id.tv_comment_hot_data1);
+                viewHolder.like = (CheckedTextView) convertView.findViewById(R.id.tv_hot_likes_count1);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            Picasso.with(FullscreenActivity.this).load(sBean.get(position).getUser().getAvatar_url()).into(viewHolder.iv_show);
+            viewHolder.tv_name.setText(sBean.get(position).getUser().getNickname());
+            viewHolder.tv_context.setText(sBean.get(position).getContent());
+            String Date = returnDate((sBean.get(position).getCreated_at()));
+            viewHolder.tv_data.setText(Date);
+            viewHolder.like.setText(""+sBean.get(position).getLikes_count());
+            return convertView;
+        }
     }
+
+    class ViewHolder {
+        CircleImageView iv_show;
+        TextView tv_context;
+        TextView tv_name;
+        TextView tv_data;
+        CheckedTextView like;
+    }
+
 }

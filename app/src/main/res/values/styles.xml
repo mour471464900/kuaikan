@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -21,6 +21,8 @@
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
+
+
 <!--   这个是checkBox的-->
     <style name="custom_dianzhan" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/seletor_dianzhan</item>
@@ -29,6 +31,12 @@
     <style name="custom_pinlun" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/selector_pinlun</item>
     </style>
+    <style name="custom_guanzhu" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_guanzhu</item>
+    </style>
+
+    <!-- checkbox   end-->
+
 
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>

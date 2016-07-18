@@ -2,23 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffffff"
-    tools:context="com.example.hao.myapplication.FullscreenActivity">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/info_Bar"
         android:layout_width="match_parent"
-        android:background="@android:color/holo_red_light"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="backMain"
             android:scaleType="fitXY"
             android:src="@drawable/ic_up_indicator" />
+
         <TextView
             android:id="@+id/tv_check_all_title"
             android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
             android:text="第47话"
             android:textColor="#000000"
             android:textSize="23sp" />
+
         <TextView
             android:id="@+id/tv_check_all"
             android:layout_width="wrap_content"
@@ -38,27 +39,46 @@
             android:textColor="#ffb300"
             android:textSize="20sp" />
     </RelativeLayout>
+
     <ListView
         android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        >
-    </ListView>
+        android:divider="#ffffff"
+        android:dividerHeight="0dp"
+       />
     <!-- 这是控制下方是否-->
     <LinearLayout
         android:id="@+id/fullscreen_content_controls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ded8d8"
+        android:padding="6dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:orientation="horizontal"
-        >
-        <Button
+        android:orientation="horizontal">
+        <EditText
             android:id="@+id/dummy_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@drawable/shape_ed"
+            android:hint="发表评论"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:drawablePadding="5dp"
+            android:textColor="@color/darker_gray"
+            android:textColorHint="@color/darker_gray"
+            android:textCursorDrawable="@color/colorContent"
+            android:drawableLeft="@drawable/ic_commenting"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/dummy_button" />
+            android:layout_gravity="center"
+            android:src="@drawable/ic_home_share_normal"
+            />
     </LinearLayout>
 
 </LinearLayout>

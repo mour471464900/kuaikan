@@ -76,11 +76,7 @@
             </intent-filter>
         </activity>
         <!-- share sdk 的end -->
-        <activity
-            android:name=".activity.FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
         <activity
             android:name=".activity.CommentReplyActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
@@ -90,6 +86,21 @@
         <activity
             android:name=".activity.CommentIconActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <!-- 全屏 -->
+        <activity
+            android:name=".activity.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:process=":picture"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 全屏 -->
+        <activity android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
+        <!-- 热门回复界面-->
+        <activity android:name=".activity.MainReplyActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
     </application>
 
 </manifest>

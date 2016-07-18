@@ -85,7 +85,7 @@
             android:drawablePadding="5dp"
             android:text="1"
             android:layout_marginRight="10dp"
-            />
+            android:checked="false" />
         <TextView
             android:id="@+id/tv_hot_comments_count1"
 

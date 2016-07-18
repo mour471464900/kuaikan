@@ -4,18 +4,12 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.media.MediaMetadataCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity;
 import com.android.kuaikanmanhua.kuaikan.activity.FullscreenActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.MainReplyActivity;
 import com.android.kuaikanmanhua.kuaikan.adapter.CommonAdapter;
 import com.android.kuaikanmanhua.kuaikan.adapter.ViewHolderM;
 import com.android.kuaikanmanhua.kuaikan.bean.SevenDayBean;
@@ -117,6 +113,7 @@ public class SevenDayFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), FullscreenActivity.class);
+                intent.putExtra("id", mList.get(position - 1).getId());
                 startActivity(intent);
 //               这个要跳转到观看漫画的activity，是一个全屏的activity
             }
@@ -149,6 +146,7 @@ public class SevenDayFragment extends Fragment {
                     }
                 });
             }
+
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
             }
@@ -223,7 +221,7 @@ public class SevenDayFragment extends Fragment {
             TextView top_avatar = (TextView) holderM.getView(R.id.tv_seven_top_avatar);
             TextView bottom_title = (TextView) holderM.getView(R.id.tv_seven_bottom_title);
             final CheckBox dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
-            CheckBox pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
+            final CheckBox pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
             ImageView cover = (ImageView) holderM.getView(R.id.iv_seven_cover);
 //            改变Ui控件
 //            --------------------
@@ -239,29 +237,35 @@ public class SevenDayFragment extends Fragment {
             bottom_title.setText(bean.getTitle());
             dianzhan.setText("" + bean.getLikes_count());
             pinlun.setText("" + bean.getComments_count());
-            Picasso.with(getActivity()).load(bean.getCover_image_url()).into(cover);
+            Picasso.with(getActivity()).load(bean.getCover_image_url())
+                    .placeholder(R.drawable.ic_common_placeholder_l).into(cover);
+//              设置设
 //            改变控件
 //            ----------作者的点击---------
             top_avatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "点击了作者", Toast.LENGTH_SHORT).show();
+                    Intent intent =new Intent(getActivity(),CommentIconActivity.class);
+                    intent.putExtra("bean",bean.getTopic().getUser().getId());
+                    startActivity(intent);
                 }
             });
 //            ------点赞按钮的点击--------
             dianzhan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    dianzhan.setText(""+(bean.getLikes_count()+1));
+                    dianzhan.setText("" + (bean.getLikes_count() + 1));
                 }
             });
-           pinlun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-               @Override
-               public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                   Toast.makeText(getActivity(),"00",Toast.LENGTH_LONG).show();
-               }
-           });
-
+//              点击评论 跳转更多的评论
+            pinlun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Intent intent =new Intent(getActivity(),MainReplyActivity.class);
+                    intent.putExtra("id",bean.getId());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
