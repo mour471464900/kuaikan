@@ -40,7 +40,7 @@ public class CommentDynamicFragment extends Fragment {
    @BindView(R.id.lv_comment_datum_list)
     PullToRefreshListView RefreshListView;
 
-    private CommentHotBean.DataBean.FeedsBean feedBean;
+    private int feedBean;
     private View view;
   List<CommentDynamicBean.DataBean.FeedsBean> mlist=new ArrayList<>();
     private HotGridViewAdapter gridViewAdapter;
@@ -61,7 +61,7 @@ public class CommentDynamicFragment extends Fragment {
         super.onAttach(context);
         Bundle bundle = getArguments();
         if(bundle!=null){
-            feedBean=(CommentHotBean.DataBean.FeedsBean)bundle.getSerializable("bean");
+            feedBean=bundle.getInt("bean");
         }
     }
 
@@ -73,10 +73,10 @@ public class CommentDynamicFragment extends Fragment {
         RefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         listView= RefreshListView.getRefreshableView();
         header=LayoutInflater.from(getActivity()).inflate(R.layout.comment_hot_fragment_listview,null);
-        listView.addHeaderView(header);
+//        listView.addHeaderView(header);
         initData();
         initAdapter();
-        initHeader();
+//        initHeader();
         return view;
     }
 
@@ -89,26 +89,26 @@ public class CommentDynamicFragment extends Fragment {
         TextView  likes_count = (TextView)header. findViewById(R.id.tv_hot_likes_count);
         TextView     comments_count = (TextView) header.findViewById(R.id.tv_hot_comments_count);
         CustomGridView   gv_picture = (CustomGridView) header.findViewById(R.id.gv_hot_picture);
-        Picasso.with(getActivity()).load(feedBean.getUser().getAvatar_url()).into(iv_show);
-        tv_name.setText(feedBean.getUser().getNickname());
-        tv_context.setText(feedBean.getContent().getText());
-        String Date = returnDate(feedBean.getUpdated_at());
-        tv_data.setText(Date);
-        likes_count.setText("" + feedBean.getLikes_count());
-        comments_count.setText("" + feedBean.getComments_count());
-        List<String> list = new ArrayList<>();
-        list.addAll(feedBean.getContent().getImages());
-        int layoutId = 0;
-        if(list.size()==1){
-           gv_picture.setNumColumns(1);
-            layoutId = R.layout.comment_hot_fragment_gridview2;
-        }else {
-           gv_picture.setNumColumns(3);
-            layoutId = R.layout.comment_hot_fragment_gridview;
-        }
-        gridViewAdapter = new HotGridViewAdapter(getActivity(), layoutId, list);
-        gv_picture.setAdapter(gridViewAdapter);
-        gridViewAdapter.notifyDataSetChanged();
+//        Picasso.with(getActivity()).load(feedBean.getUser().getAvatar_url()).into(iv_show);
+//        tv_name.setText(feedBean.getUser().getNickname());
+//        tv_context.setText(feedBean.getContent().getText());
+//        String Date = returnDate(feedBean.getUpdated_at());
+//        tv_data.setText(Date);
+//        likes_count.setText("" + feedBean.getLikes_count());
+//        comments_count.setText("" + feedBean.getComments_count());
+//        List<String> list = new ArrayList<>();
+//        list.addAll(feedBean.getContent().getImages());
+//        int layoutId = 0;
+//        if(list.size()==1){
+//           gv_picture.setNumColumns(1);
+//            layoutId = R.layout.comment_hot_fragment_gridview2;
+//        }else {
+//           gv_picture.setNumColumns(3);
+//            layoutId = R.layout.comment_hot_fragment_gridview;
+//        }
+//        gridViewAdapter = new HotGridViewAdapter(getActivity(), layoutId, list);
+//        gv_picture.setAdapter(gridViewAdapter);
+//        gridViewAdapter.notifyDataSetChanged();
     }
 
     private void initAdapter() {
@@ -117,7 +117,7 @@ public class CommentDynamicFragment extends Fragment {
     }
 
     private void initData() {
-        OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_dynamic_start+feedBean.getUser().getId()+SevenDayUrl.comment_icon_dynamic_second+feedBean.getFeed_id()+SevenDayUrl.comment_icon_dynamic_end).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_dynamic_start+feedBean+SevenDayUrl.comment_icon_dynamic_end).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
                 Gson gson=new Gson();

@@ -39,8 +39,8 @@ public static final String  COMMENT_START_HOT_CONTEXT ="http://api.kuaikanmanhua
 //这是点击图像后跳转进来的链接
 //    http://api.kuaikanmanhua.com/v1/feeds/feed_lists?uid=13278865&since=13718771437449216&page_num=2&catalog_type=3
 public static final String comment_icon_dynamic_start="http://api.kuaikanmanhua.com/v1/feeds/feed_lists?uid=";
-   public static final String comment_icon_dynamic_second="&since=";
-    public static final String comment_icon_dynamic_end="&page_num=2&catalog_type=3";
+  // public static final String comment_icon_dynamic_second="&since=";
+    public static final String comment_icon_dynamic_end="&since=&page_num=2&catalog_type=3";
 //这首点击图像后跳转进来的动态链接
 
 }

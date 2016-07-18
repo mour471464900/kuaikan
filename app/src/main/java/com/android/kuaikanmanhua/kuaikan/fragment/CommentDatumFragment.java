@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class CommentDatumFragment extends Fragment {
-    private CommentHotBean.DataBean.FeedsBean feedBean;
+    private int feedBean;
     private List<CommentIconBean.DataBean.TopicsBean> mlist=new ArrayList<>();
     private CommentIconBean bean;
     @BindView(R.id.lv_comment_datum)
@@ -52,7 +52,7 @@ public class CommentDatumFragment extends Fragment {
         super.onAttach(context);
         Bundle bundle = getArguments();
         if(bundle!=null){
-            feedBean=(CommentHotBean.DataBean.FeedsBean)bundle.getSerializable("bean");
+            feedBean=bundle.getInt("bean");
         }
     }
 
@@ -83,7 +83,7 @@ public class CommentDatumFragment extends Fragment {
 
 
     private void initData() {
-       OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_datum+feedBean.getUser().getId()).callback(new IOKCallBack() {
+       OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_datum+feedBean).callback(new IOKCallBack() {
            @Override
            public void success(String result) {
                Gson gson=new Gson();

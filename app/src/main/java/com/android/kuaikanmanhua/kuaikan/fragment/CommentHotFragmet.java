@@ -228,7 +228,7 @@ public class CommentHotFragmet extends Fragment {
                 public void onClick(View v) {
                     int postion= (int) v.getTag();
                     Intent intent=new Intent(getActivity(), CommentIconActivity.class);
-                    intent.putExtra("bean",mlist.get(position));
+                    intent.putExtra("bean",mlist.get(position).getUser().getId());
                     startActivity(intent);
                 }
             });

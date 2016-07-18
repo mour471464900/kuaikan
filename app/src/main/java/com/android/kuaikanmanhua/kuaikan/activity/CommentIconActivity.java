@@ -39,7 +39,7 @@ public class CommentIconActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     private CompanyAdapter adapter;
-    private CommentHotBean.DataBean.FeedsBean feedBean;
+    private int feedBean;
     private CommentIconBean bean;
 
     @Override
@@ -56,7 +56,7 @@ public class CommentIconActivity extends AppCompatActivity {
 
     private void initview() {
 
-        OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_datum+feedBean.getUser().getId()).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(SevenDayUrl.comment_icon_datum+feedBean).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
                 Gson gson=new Gson();
@@ -76,7 +76,7 @@ public class CommentIconActivity extends AppCompatActivity {
     private void initBean() {
         Intent intent=getIntent();
       if(intent!=null){
-          feedBean=(CommentHotBean.DataBean.FeedsBean)intent.getSerializableExtra("bean");
+          feedBean=(intent.getIntExtra("bean",0));
       }
 
     }
@@ -126,7 +126,7 @@ public class CommentIconActivity extends AppCompatActivity {
 
     private void initFragment() {
         Bundle bundle=new Bundle();
-        bundle.putSerializable("bean",feedBean);
+        bundle.putInt("bean",feedBean);
         CommentDatumFragment fragment1 = CommentDatumFragment.newInstance(bundle);
         CommentDynamicFragment fragment2 = CommentDynamicFragment.newInstance(bundle);
         fragments.add(fragment1);
