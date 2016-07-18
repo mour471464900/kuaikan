@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+   <ImageView
+       android:id="@+id/iv_comment_datum_icon"
+       android:layout_width="0dp"
+       android:layout_weight="2"
+       android:layout_height="90dp"
+       android:background="@drawable/ic_launcher"
+       />
+   <LinearLayout
+       android:layout_width="0dp"
+       android:layout_weight="3"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_marginLeft="10dp"
+       >
+    <TextView
+        android:id="@+id/tv_comment_datum_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="冥婚"
+        android:singleLine="true"
+
+        android:textSize="15sp"
+        android:textColor="#000000"
+        />
+       <TextView
+           android:id="@+id/tv_comment_datum_content"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:lines="2"
+           android:ellipsize="end"
+           android:text="这是一个年轻女子和男友从家乡到大城市，为了过上好生活，通过阴婚赚．．．"
+           />
+   </LinearLayout>
+</LinearLayout>

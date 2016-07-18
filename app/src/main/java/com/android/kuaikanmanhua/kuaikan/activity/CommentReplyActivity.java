@@ -154,5 +154,7 @@ public class CommentReplyActivity extends AppCompatActivity {
             fragments.add(fragment2);
         }
 
-
+  public void back(View view){
+      finish();
+  }
     }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="10dp"
+          android:background="@color/darker_gray"
+          />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="简介"
+        android:textSize="15sp"
+        android:padding="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darker_gray"
+        />
+    <TextView
+        android:id="@+id/tv_comment_datum_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="晚上睡不着白天睡不醒喜欢画灵异事件"
+        android:textSize="15sp"
+        android:padding="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/darker_gray"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TA的作品"
+        android:textSize="15sp"
+        android:padding="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darker_gray"
+        />
+</LinearLayout>

@@ -85,11 +85,12 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
         List<String> list = new ArrayList<>();
         list.addAll(feedBean.getContent().getImages());
         int layoutId = 0;
-        if (list.size() != 1) {
-            layoutId = R.layout.comment_hot_fragment_gridview;
-
-        } else {
+        if(list.size()==1){
+            gv_picture.setNumColumns(1);
             layoutId = R.layout.comment_hot_fragment_gridview2;
+        }else {
+      gv_picture.setNumColumns(3);
+            layoutId = R.layout.comment_hot_fragment_gridview;
         }
         gridViewAdapter = new HotGridViewAdapter(CommentContextActivity.this, layoutId, list);
         gv_picture.setAdapter(gridViewAdapter);

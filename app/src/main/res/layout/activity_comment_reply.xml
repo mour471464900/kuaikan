@@ -15,6 +15,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:src="@drawable/ic_nav_delete"
+         android:onClick="back"
          />
      <RadioGroup
          android:id="@+id/rg_hot_reply"
@@ -32,7 +33,7 @@
              android:text="最新评论"
              android:gravity="center"
              android:button="@null"
-
+            android:checked="true"
              />
          <RadioButton
              android:id="@+id/rb_comment_hot_2"

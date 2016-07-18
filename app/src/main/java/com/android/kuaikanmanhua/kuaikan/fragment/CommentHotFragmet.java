@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.activity.CommentContextActivity;
 
+import com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity;
 import com.android.kuaikanmanhua.kuaikan.activity.CommentReplyActivity;
 import com.android.kuaikanmanhua.kuaikan.adapter.HotGridViewAdapter;
 import com.android.kuaikanmanhua.kuaikan.bean.CommentHotBean;
@@ -221,13 +222,24 @@ public class CommentHotFragmet extends Fragment {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             }
+           //头像监听跳转到CommentIconActivity
+            viewHolder.iv_show.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int postion= (int) v.getTag();
+                    Intent intent=new Intent(getActivity(), CommentIconActivity.class);
+                    intent.putExtra("bean",mlist.get(position));
+                    startActivity(intent);
+                }
+            });
+
             Picasso.with(getActivity()).load(mlist.get(position).getUser().getAvatar_url()).into(viewHolder.iv_show);
             viewHolder.tv_name.setText(mlist.get(position).getUser().getNickname());
             viewHolder.tv_context.setText(mlist.get(position).getContent().getText());
             //设置position
             viewHolder.likes_count.setTag(position);
             viewHolder.comments_count.setTag(position);
-
+            viewHolder.iv_show.setTag(position);
 //            点击回复跳转到回复界面
         viewHolder.comments_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
