@@ -1,5 +1,6 @@
 package com.android.kuaikanmanhua.kuaikan.activity;
 
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -27,7 +28,6 @@ import butterknife.ButterKnife;
  *
  *  这个是主要的 内容的activity *
  *  这是重要内容，里面有主要的四个fragment
- *
 */
 public class ContentActivity extends AppCompatActivity {
     @BindView(R.id.rg_main)
@@ -142,5 +142,17 @@ public class ContentActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
+//        横竖屏切换的时候保护现场
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        switchFragment(0);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

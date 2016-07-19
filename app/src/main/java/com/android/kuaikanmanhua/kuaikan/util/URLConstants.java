@@ -37,4 +37,9 @@ public class URLConstants {
     public static final String URL_ZUI_XING_START = "http://api.kuaikanmanhua.com/v1/comics/";
     public static final String URL_ZUI_XING_END = "/comments/0?order=score";
 //    http://api.kuaikanmanhua.com/v1/comics/14213/comments/0?order=score
+//    作品的详情
+//    http://api.kuaikanmanhua.com/v1/topics/363?sort=0
+    public static final String URL_OPUS_START="http://api.kuaikanmanhua.com/v1/topics/";
+    public static final String URL_OPUS_END="?sort=0";
+
 }

@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -106,7 +108,7 @@ public class MainUpdateFragment extends Fragment {
 
 //       返回标题的集合
     private List<String> initTitle() {
-        SimpleDateFormat myFmt=new SimpleDateFormat("E");
+        SimpleDateFormat myFmt=new SimpleDateFormat("E", Locale.CHINESE);
         Date date=new Date();
         String now = myFmt.format(date);
 //        匹配今天是星期几，然后动态加入星期几

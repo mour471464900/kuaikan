@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,16 +34,16 @@
         </activity>
         <activity
             android:name=".activity.ContentActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <activity
             android:name=".activity.GuideActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <activity
             android:name=".activity.ClassifyInfoActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <activity
             android:name=".activity.SearchActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <!-- share sdk   begin -->
         <!-- 微信分享回调 -->
         <activity
@@ -79,26 +79,28 @@
 
         <activity
             android:name=".activity.CommentReplyActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <activity
             android:name=".activity.CommentContextActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <activity
             android:name=".activity.CommentIconActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
         <!-- 全屏 -->
         <activity
             android:name=".activity.FullscreenActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            />
+            android:theme="@style/NoBar" />
         <!-- 全屏 -->
-        <activity
-            android:name=".activity.LoginActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <!-- 热门回复界面 -->
         <activity
             android:name=".activity.MainReplyActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+            android:theme="@style/NoBar" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/NoBar" />
+        <activity android:name=".activity.OpusActivity"
+             android:theme="@style/NoBar"
+            ></activity>
     </application>
 
 </manifest>

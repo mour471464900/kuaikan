@@ -34,12 +34,12 @@ public class FullFirstAdapter extends CommonAdapter<String> {
     @Override
     public void convert(ViewHolderM holderM, String bean) {
         ImageView imageview =(ImageView) holderM.getView(R.id.iv_full_image);
-        Picasso.with( imageview.getContext() )
-                .load(bean)
-                .config(Bitmap.Config.RGB_565)
-                 .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
+          Picasso.with( imageview.getContext() )
+              .load(bean)
+                .config(Bitmap.Config.RGB_565)//
+                 .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)//放弃内存缓存，直接存到磁盘中去
                 .placeholder(R.drawable.ic_common_placeholder_l)  //设置占位图 这样可以让
-                                                     // ，有很多图片的时候的listview的时候都有数据
+                  // ，有很多图片的请求
                 .into(imageview)
                     ;
 

@@ -33,7 +33,6 @@ public class ClassifyInfoAdapter extends CommonAdapter<ClassifyInfoBean.DataBean
         TextView tv_pro_author=(TextView)holderM.getView(R.id.tv_pro_author);
         TextView tv_pro_dianzan=(TextView) holderM.getView(R.id.tv_pro_dianzan);
         TextView tv_pro_pinglun=(TextView)holderM.getView(R.id.tv_pro_pinglun);
-
         Picasso.with(context).load(bean.getCover_image_url()).into(imageView);
         tv_pro_name.setText(bean.getTitle());
         tv_pro_author.setText(bean.getUser().getNickname());

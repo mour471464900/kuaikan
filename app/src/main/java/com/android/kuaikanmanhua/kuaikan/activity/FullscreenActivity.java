@@ -57,7 +57,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
     //    评论的集合
     private List<CommentHotContextBean.DataBean.CommentsBean>
-            sBean ;
+            sBean;
 
     //    图片的地址的集合
     private List<String> images;
@@ -79,6 +79,8 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     private TextView share;
     private View footView3;
     private TextView more;
+    private TextView title;
+    private TextView allComic;
 //      漫画的对象
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -112,7 +114,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     }
 
     private void initDialog() {
-         dialog=new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.setMessage("客官请骚等");
     }
 
@@ -144,12 +146,17 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     }
 
     private void initView() {
+        title = (TextView) findViewById(R.id.tv_check_all_title); //标题
+
         mControlsView = findViewById(R.id.fullscreen_content_controls);
 //        这个是被隐藏的控件
         mContentView = (ListView) findViewById(R.id.fullscreen_content);
 //        这个是被点击控件 ，view
 //        自定义显示 和隐藏 布局
         myView = findViewById(R.id.info_Bar);
+
+//         点击全集的text
+        allComic = (TextView) findViewById(R.id.tv_check_all);
         initHeardFootView();
 //        初始化头部和尾的视图
     }
@@ -170,17 +177,17 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
         next = (TextView) footView.findViewById(R.id.tv_full_next);// 下一篇的按钮
         foot_icon = (ImageView) footView.findViewById(R.id.iv_full_auther);// 底部的头像
 //          更新头和底部
-        foot_name= (TextView) footView.findViewById(R.id.tv_full_name);//底部的名字
+        foot_name = (TextView) footView.findViewById(R.id.tv_full_name);//底部的名字
 
-        share=(TextView)footView.findViewById(R.id.tv_full_share);
+        share = (TextView) footView.findViewById(R.id.tv_full_share);
 //        分享的按键
 //        最后一个头部
-        footView2 = LayoutInflater.from(this).inflate(R.layout.full_foot_item2,null);
-        footListView=(CustomListView) footView2.findViewById(R.id.lv_foot_item);
+        footView2 = LayoutInflater.from(this).inflate(R.layout.full_foot_item2, null);
+        footListView = (CustomListView) footView2.findViewById(R.id.lv_foot_item);
 //        这是底部的评论的listview
 //         z最底部的加载更多
-         footView3=LayoutInflater.from(this).inflate(R.layout.full_foot_item3,null);
-              more =(TextView) footView3.findViewById(R.id.tv_more_comment);
+        footView3 = LayoutInflater.from(this).inflate(R.layout.full_foot_item3, null);
+        more = (TextView) footView3.findViewById(R.id.tv_more_comment);
 //          下面的控件
     }
 
@@ -191,7 +198,9 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
                 .getTopic().getUser().getAvatar_url()).into(foot_icon);
         authur_name.setText(fullWatchBean.getData().getTopic().getUser().getNickname());
         foot_name.setText(fullWatchBean.getData().getTopic().getUser().getNickname());
-        dianzhan.setText(""+fullWatchBean.getData().getLikes_count());
+        dianzhan.setText("" + fullWatchBean.getData().getLikes_count());
+        title.setText(fullWatchBean.getData().getTitle());
+//          改变控件的属性
         pre.setOnClickListener(this);
         next.setOnClickListener(this);
         dianzhan.setOnClickListener(this);
@@ -201,6 +210,8 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
         share.setOnClickListener(this);
 //        一键 分享的功能
         more.setOnClickListener(this);
+
+        allComic.setOnClickListener(this);
     }
 
     //          通过网络请求得到图片的集合
@@ -224,17 +235,18 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
             setupFootListView();
         }
     }
-//    设置底部listview
+
+    //    设置底部listview
     private void setupFootListView() {
 //          更新评论页面
-        sBean=new ArrayList<>();
-        OkHttpTool.newInstance().start(URLConstants.URL_FULL_COMMENT_START+id+URLConstants.URL_FULL_COMMENT_END)
+        sBean = new ArrayList<>();
+        OkHttpTool.newInstance().start(URLConstants.URL_FULL_COMMENT_START + id + URLConstants.URL_FULL_COMMENT_END)
                 .callback(new IOKCallBack() {
                     @Override
                     public void success(String result) {
-                     Gson gson=new Gson();
+                        Gson gson = new Gson();
                         CommentHotContextBean commentHotContextBean = gson.fromJson(result, CommentHotContextBean.class);
-                        if(commentHotContextBean!=null){
+                        if (commentHotContextBean != null) {
                             sBean.addAll(commentHotContextBean.getData().getComments());
                             FootAdapter footAdapter = new FootAdapter();
                             footListView.setAdapter(footAdapter);
@@ -324,25 +336,39 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 //                跳转跟多评论的界面
                 setupMoreComment();
                 break;
+            case R.id.tv_check_all:
+//               跳转全集的效果
+                setupCheckAll();
+                break;
         }
     }
-//    更多评论的对象
+
+    //       作品详情页面
+    private void setupCheckAll() {
+        Intent intent = new Intent(this, OpusActivity.class);
+        intent.putExtra("id", fullWatchBean.getData().getTopic().getId());
+        startActivity(intent);
+        finish();
+    }
+
+    //    更多评论的对象
     private void setupMoreComment() {
-        Intent intent =new Intent(this,MainReplyActivity.class);
-        intent.putExtra("id",fullWatchBean.getData().getId());
+        Intent intent = new Intent(this, MainReplyActivity.class);
+        intent.putExtra("id", fullWatchBean.getData().getId());
         startActivity(intent);
     }
 
     //                跳转作者
     private void setupZuozhe() {
         int id = fullWatchBean.getData().getTopic().getUser().getId();
-        Intent intent =new Intent(this,CommentIconActivity.class);
-       intent.putExtra("bean",id);
+        Intent intent = new Intent(this, CommentIconActivity.class);
+        intent.putExtra("bean", id);
         startActivity(intent);
     }
+
     //需要登录
     private void setupLogin() {
-        Intent intent =new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -351,8 +377,10 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
         Intent intent = new Intent(this, FullscreenActivity.class);
         int next_comic_id = fullWatchBean.getData().getNext_comic_id();
         if (next_comic_id != 0) {
-            intent.putExtra("id", (Integer)next_comic_id);
+            intent.putExtra("id", (Integer) next_comic_id);
             startActivity(intent);
+            finish();
+//            杀死这个acitivity
         } else {
             Toast.makeText(this, "已经是最后一章", Toast.LENGTH_SHORT).show();
         }
@@ -361,9 +389,11 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     //   上一篇漫画
     private void setupPreComic() {
         Intent intent = new Intent(this, FullscreenActivity.class);
-        if (fullWatchBean.getData().getNext_comic_id() != 0) {
+        if (fullWatchBean.getData().getPrevious_comic_id() != 0) {
             intent.putExtra("id", (Integer) fullWatchBean.getData().getPrevious_comic_id());
             startActivity(intent);
+            finish();
+//            杀死这个acitivity
         } else {
             Toast.makeText(this, "只有一章", Toast.LENGTH_SHORT).show();
         }
@@ -407,7 +437,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
             viewHolder.tv_context.setText(sBean.get(position).getContent());
             String Date = returnDate((sBean.get(position).getCreated_at()));
             viewHolder.tv_data.setText(Date);
-            viewHolder.like.setText(""+sBean.get(position).getLikes_count());
+            viewHolder.like.setText("" + sBean.get(position).getLikes_count());
             return convertView;
         }
     }
