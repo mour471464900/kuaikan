@@ -32,6 +32,8 @@ public class MainFragment extends Fragment {
     @BindView(R.id.iv_mainfragment_search)
     ImageView iv_search;
     //    查找控件
+
+
     private List<Fragment> fragmentList = new ArrayList<>();
     private RadioButton[] rbChilds;
     private int preIndex=1;

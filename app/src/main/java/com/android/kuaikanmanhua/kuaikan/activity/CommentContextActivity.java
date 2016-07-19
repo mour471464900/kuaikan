@@ -31,11 +31,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
 //评论热门跳转的内容界面
 public class CommentContextActivity extends Activity {
     @BindView(R.id.lv_comment_hot_context_listview)
     ListView mlistview;
-List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
+    List<CommentHotContextBean.DataBean.CommentsBean> sBean = new ArrayList<>();
     private CommentHotBean.DataBean.FeedsBean feedBean;
     private MyAdapter myAdapter;
     private View header;
@@ -55,9 +56,9 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
 
         setContentView(R.layout.activity_comment_context);
         ButterKnife.bind(this);
-         header=LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_header,null);
-      mlistview.addHeaderView(header);
-        tail=LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_tail,null);
+        header = LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_header, null);
+        mlistview.addHeaderView(header);
+        tail = LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_tail, null);
         mlistview.addFooterView(tail);
         initBean();
         initData();
@@ -67,29 +68,29 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
     }
 
     private void initHeader() {
-        iv_show = (CircleImageView)header. findViewById(R.id.iv_comment_hot_icon2);
-       tv_name = (TextView)header. findViewById(R.id.iv_comment_hot_name2);
-       tv_context = (TextView)header. findViewById(R.id.tv_hot_text2);
+        iv_show = (CircleImageView) header.findViewById(R.id.iv_comment_hot_icon2);
+        tv_name = (TextView) header.findViewById(R.id.iv_comment_hot_name2);
+        tv_context = (TextView) header.findViewById(R.id.tv_hot_text2);
         gv_picture = (CustomGridView) header.findViewById(R.id.gv_hot_picture);
-        tv_data = (TextView)header. findViewById(R.id.tv_hot_data2);
-        likes_count = (TextView)header. findViewById(R.id.tv_hot_likes_count2);
-       comments_count = (TextView) header.findViewById(R.id.tv_hot_comments_count2);
+        tv_data = (TextView) header.findViewById(R.id.tv_hot_data2);
+        likes_count = (TextView) header.findViewById(R.id.tv_hot_likes_count2);
+        comments_count = (TextView) header.findViewById(R.id.tv_hot_comments_count2);
 
         Picasso.with(CommentContextActivity.this).load(feedBean.getUser().getAvatar_url()).into(iv_show);
-       tv_name.setText(feedBean.getUser().getNickname());
+        tv_name.setText(feedBean.getUser().getNickname());
         tv_context.setText(feedBean.getContent().getText());
-        String Date = returnDate((feedBean.getUpdated_at())/1000);
+        String Date = returnDate((feedBean.getUpdated_at()) / 1000);
         tv_data.setText(Date);
-      likes_count.setText("" + feedBean.getLikes_count());
-       comments_count.setText("" + feedBean.getComments_count());
+        likes_count.setText("" + feedBean.getLikes_count());
+        comments_count.setText("" + feedBean.getComments_count());
         List<String> list = new ArrayList<>();
         list.addAll(feedBean.getContent().getImages());
         int layoutId = 0;
-        if(list.size()==1){
+        if (list.size() == 1) {
             gv_picture.setNumColumns(1);
             layoutId = R.layout.comment_hot_fragment_gridview2;
-        }else {
-      gv_picture.setNumColumns(3);
+        } else {
+            gv_picture.setNumColumns(3);
             layoutId = R.layout.comment_hot_fragment_gridview;
         }
         gridViewAdapter = new HotGridViewAdapter(CommentContextActivity.this, layoutId, list);
@@ -98,49 +99,49 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
     }
 
     private void bindAdapter() {
-      mlistview.setAdapter(myAdapter);
+        mlistview.setAdapter(myAdapter);
     }
 
     private void setAdapter() {
-      myAdapter=new MyAdapter();
+        myAdapter = new MyAdapter();
     }
 
     //得到外界传入的对象
     private void initBean() {
-        Intent intent=getIntent();
-        if(intent.getSerializableExtra("bean")!=null){
-      feedBean= (CommentHotBean.DataBean.FeedsBean) intent.getSerializableExtra("bean");
+        Intent intent = getIntent();
+        if (intent.getSerializableExtra("bean") != null) {
+            feedBean = (CommentHotBean.DataBean.FeedsBean) intent.getSerializableExtra("bean");
 
         }
     }
 
     private void initData() {
-        OkHttpTool.newInstance().start(SevenDayUrl.COMMENT_START_HOT_CONTEXT+feedBean.getFeed_id()+SevenDayUrl.COMMENT_END_HOT_CONTEXT).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(SevenDayUrl.COMMENT_START_HOT_CONTEXT + feedBean.getFeed_id() + SevenDayUrl.COMMENT_END_HOT_CONTEXT).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
-          Gson gson=new Gson();
-                CommentHotContextBean ContextBean=gson.fromJson(result,CommentHotContextBean.class);
+                Gson gson = new Gson();
+                CommentHotContextBean ContextBean = gson.fromJson(result, CommentHotContextBean.class);
 
-           sBean.addAll(ContextBean.getData().getComments());
+                sBean.addAll(ContextBean.getData().getComments());
                 myAdapter.notifyDataSetChanged();
             }
         });
     }
+
     //   这是将毫秒转换成日期的方法
     private String returnDate(long time) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
-        String now = sdf.format(new Date(time*1000));
+        String now = sdf.format(new Date(time * 1000));
         return now;
     }
 
 
-
-    class MyAdapter extends BaseAdapter{
+    class MyAdapter extends BaseAdapter {
 
 
         @Override
         public int getCount() {
-            return sBean==null?0:sBean.size();
+            return sBean == null ? 0 : sBean.size();
         }
 
         @Override
@@ -183,13 +184,15 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
             return convertView;
         }
     }
-    class ViewHolder{
+
+    class ViewHolder {
         CircleImageView iv_show;
         TextView tv_context;
         TextView tv_name;
         TextView tv_data;
     }
-//  返回
+
+    //  返回
     public void onBack(View view) {
         finish();
     }
