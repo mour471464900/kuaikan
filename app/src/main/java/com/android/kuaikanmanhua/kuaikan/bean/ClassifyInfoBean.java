@@ -1,5 +1,6 @@
 package com.android.kuaikanmanhua.kuaikan.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public class ClassifyInfoBean {
             this.topics = topics;
         }
 
-        public static class TopicsBean {
+        public static class TopicsBean implements Serializable {
             private int comics_count;
             private int comments_count;
             private String cover_image_url;

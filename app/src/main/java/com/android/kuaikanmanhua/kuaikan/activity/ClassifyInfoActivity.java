@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.ClassifyInfoAdapter;
 import com.android.kuaikanmanhua.kuaikan.bean.ClassifyInfoBean;
 import com.android.kuaikanmanhua.kuaikan.bean.ClassifyBean;
+import com.android.kuaikanmanhua.kuaikan.bean.FullWatchBean;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
 import com.android.kuaikanmanhua.kuaikan.util.OkHttpTool;
 import com.android.kuaikanmanhua.kuaikan.util.URLConstants;
@@ -30,6 +32,7 @@ public class ClassifyInfoActivity extends Activity {
     private List<ClassifyInfoBean.DataBean.TopicsBean> itemsBeanList;
     private ClassifyInfoAdapter infoAdapter;
     private ClassifyBean.DataBean.SuggestionBean suggestionBean;
+    private FullWatchBean.DataBean.TopicBean topicBean;
 
 
     @BindView(R.id.tv_banner_title_name)
@@ -55,6 +58,24 @@ public class ClassifyInfoActivity extends Activity {
         initAdapter();
         //绑定适配器
         bindAdapter();
+        //设置监听
+        initListener();
+    }
+
+    private void initListener() {
+        mScrollableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ClassifyInfoActivity.this,OpusActivity.class);
+               // ClassifyInfoBean.DataBean.TopicsBean topicsBean=itemsBeanList.get(position);
+                //intent.putExtra("cover_image_url",topicsBean);
+               // intent.putExtra("title",topicsBean);
+               // intent.putExtra("likes_count",topicsBean);
+               // intent.putExtra("comments_count",topicsBean);
+               // intent.putExtra("id",topicBean.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData() {

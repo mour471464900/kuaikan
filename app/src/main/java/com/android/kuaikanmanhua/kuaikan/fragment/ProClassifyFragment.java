@@ -105,13 +105,14 @@ public class ProClassifyFragment extends Fragment{
             public void success(String result) {
                 Gson gson=new Gson();
                 bean=gson.fromJson(result,ClassifyBean.class);
+                if (bean!=null && bean.getData().getSuggestion()!=null){
                 List<ClassifyBean.DataBean.SuggestionBean> suggestion=bean.getData().getSuggestion();
                 for (int i = 0; i < suggestion.size(); i++) {
                     mList.add(suggestion.get(i));
                 }
                     classifyAdapter.notifyDataSetChanged();
                 }
-
+            }
         });
     }
 

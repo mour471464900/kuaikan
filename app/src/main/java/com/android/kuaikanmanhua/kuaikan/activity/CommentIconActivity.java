@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CommentIconActivity extends AppCompatActivity {
     List<Fragment> fragments = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
-@BindView(R.id.tl_comment_icon_text)
+    @BindView(R.id.tl_comment_icon_text)
      TabLayout tabLayout;
     @BindView(R.id.vp_comment_icon_content)
     ViewPager viewPager;
