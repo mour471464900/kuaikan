@@ -33,6 +33,8 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="认证：快看漫画签约作者，代表作《黎明有星辰》"
+         android:maxEms="20"
+         android:gravity="center"
          android:layout_alignParentBottom="true"
          android:layout_centerHorizontal="true"
          android:layout_marginBottom="20dp"

@@ -43,7 +43,9 @@
     <style name="custom_guanzhu" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/selector_guanzhu</item>
     </style>
-
+    <style name="custom_updata" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/slt_updata</item>
+    </style>
     <!-- checkbox   end-->
 
 

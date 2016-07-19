@@ -43,4 +43,14 @@ public static final String comment_icon_dynamic_start="http://api.kuaikanmanhua.
     public static final String comment_icon_dynamic_end="&since=&page_num=2&catalog_type=3";
 //这首点击图像后跳转进来的动态链接
 
+
+ // public static final String works="http://api.kuaikanmanhua.com/v1/topics/799?sort=0"  ;
+ public static final String works_start="http://api.kuaikanmanhua.com/v1/topics/";
+    public static final String works_end="?sort=0";
+
+
+    //搜索
+    // http://api.kuaikanmanhua.com/v1/topics/search?keyword=神&offset=0&limit=20
+public static final String SEARCH_START="http://api.kuaikanmanhua.com/v1/topics/search?keyword=";
+    public static final String SEARCH_END="&offset=0&limit=20";
 }

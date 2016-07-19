@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="200dp">
 
         <TextView
             android:id="@+id/tv_background"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_background"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:text="登录"
             android:textColor="#000000" />
@@ -32,14 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/tv_user_name"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_personal_headportrait" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/darker_gray" />
+        android:layout_height="10dp"
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_information"
@@ -47,7 +47,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -61,7 +63,7 @@
             android:layout_weight="1"
             android:text="我的消息"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -72,8 +74,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/darker_gray" />
+        android:layout_height="10dp"
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_watch"
@@ -81,7 +83,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
 
@@ -96,7 +100,7 @@
             android:layout_weight="1"
             android:text="我的关注"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -109,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gray" />
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_updata"
@@ -117,7 +121,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
 
@@ -137,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:text="更新提醒"
                 android:textColor="#000000"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,18 +152,20 @@
         </LinearLayout>
 
 
-        <ImageView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="false"
+            style="@style/custom_updata"
 
-            android:src="@drawable/ic_listitem_next" />
+            />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gray" />
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_collect"
@@ -165,7 +173,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
 
@@ -180,7 +190,7 @@
             android:layout_weight="1"
             android:text="我的收藏"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -193,7 +203,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gray" />
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_ai"
@@ -201,7 +211,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
 
@@ -221,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:text="智能缓存"
                 android:textColor="#000000"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -231,17 +243,18 @@
         </LinearLayout>
 
 
-        <ImageView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:src="@drawable/ic_listitem_next" />
+            android:checked="false"
+            android:button="@drawable/slt_ai"
+             />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/darker_gray" />
+        android:layout_height="10dp"
+        android:background="@color/darker_gra" />
 
     <LinearLayout
         android:id="@+id/ll_user_set"
@@ -249,7 +262,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="9dp"
+        android:background="#fffcfc"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -263,7 +278,7 @@
             android:layout_weight="1"
             android:text="设置"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -275,6 +290,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/darker_gray" />
+        android:background="@color/darker_gra" />
 
 </LinearLayout>
