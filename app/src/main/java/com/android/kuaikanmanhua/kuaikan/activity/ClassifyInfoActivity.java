@@ -32,13 +32,14 @@ public class ClassifyInfoActivity extends Activity {
     private List<ClassifyInfoBean.DataBean.TopicsBean> itemsBeanList;
     private ClassifyInfoAdapter infoAdapter;
     private ClassifyBean.DataBean.SuggestionBean suggestionBean;
-    private FullWatchBean.DataBean.TopicBean topicBean;
-
 
     @BindView(R.id.tv_banner_title_name)
     TextView tv_title;
     @BindView(R.id.sv_buttom)
     ScrollableListView mScrollableListView;
+
+    private ClassifyInfoBean classifyInfoBean;
+    private String encode;
 
 
     @Override
@@ -51,6 +52,7 @@ public class ClassifyInfoActivity extends Activity {
 
     }
 
+
     private void setupListView() {
         //初始化数据
         initData();
@@ -62,17 +64,14 @@ public class ClassifyInfoActivity extends Activity {
         initListener();
     }
 
+
+
     private void initListener() {
         mScrollableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(ClassifyInfoActivity.this,OpusActivity.class);
-               // ClassifyInfoBean.DataBean.TopicsBean topicsBean=itemsBeanList.get(position);
-                //intent.putExtra("cover_image_url",topicsBean);
-               // intent.putExtra("title",topicsBean);
-               // intent.putExtra("likes_count",topicsBean);
-               // intent.putExtra("comments_count",topicsBean);
-               // intent.putExtra("id",topicBean.getId());
+                intent.putExtra("id",classifyInfoBean.getData().getTopics().get(position).getId());
                 startActivity(intent);
             }
         });
@@ -90,14 +89,13 @@ public class ClassifyInfoActivity extends Activity {
         initListViewData();
     }
 
-
     /**
      * 异步任务取得
      * 设置listview 的数据
      */
     private void initListViewData() {
         itemsBeanList = new ArrayList<>();
-        String encode = null;
+
         try {
             encode = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -108,7 +106,7 @@ public class ClassifyInfoActivity extends Activity {
                     @Override
                     public void success(String result) {
                         Gson gson = new Gson();
-                        ClassifyInfoBean classifyInfoBean = gson.fromJson(result, ClassifyInfoBean.class);
+                         classifyInfoBean = gson.fromJson(result, ClassifyInfoBean.class);
                         if (classifyInfoBean != null) {
 
                             itemsBeanList.addAll(classifyInfoBean.getData().getTopics());

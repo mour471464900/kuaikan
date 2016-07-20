@@ -1,6 +1,7 @@
 package com.android.kuaikanmanhua.kuaikan.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.activity.OpusActivity;
 import com.android.kuaikanmanhua.kuaikan.bean.ExceptAdvert;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -19,11 +21,11 @@ import java.util.List;
 /**
  * Created by hao on 2016/7/8.
  */
-public class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
+public class RecycleMainAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> list;
     private Context context;
 
-    public RecycleAdapter(List<ExceptAdvert.DataBean.InfosBean.TopicsBean> list, Context context) {
+    public RecycleMainAdapter(List<ExceptAdvert.DataBean.InfosBean.TopicsBean> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -40,6 +42,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
         Picasso.with(context).load(list.get(position).getCover_image_url()).into(holder.iv_icon);
         holder.tv_title.setText(list.get(position).getTitle());
         holder.tv_author.setText(list.get(position).getUser().getNickname());
+          holder.iv_icon.setTag(position);
     }
 
     @Override
@@ -61,5 +64,18 @@ class MyViewHolder extends RecyclerView.ViewHolder {
         tv_title = (TextView) itemView.findViewById(R.id.tv_group2_title);
         tv_author = (TextView) itemView.findViewById(R.id.tv_group2_author);
 
+
+        try {
+            final int position  =(Integer) iv_icon.getTag();
+            iv_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent intent=new Intent(context, OpusActivity.class);
+                }
+            });
+        }catch (NumberFormatException e ){
+            //  数字 转换异常
+            e.printStackTrace();
+        }
     }
 }

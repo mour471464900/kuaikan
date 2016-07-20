@@ -11,18 +11,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.activity.ClassifyInfoActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.FullscreenActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.OpusActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.ProHotArrayActivity;
 import com.android.kuaikanmanhua.kuaikan.adapter.Group1Adapter;
 import com.android.kuaikanmanhua.kuaikan.adapter.Group3Adapter;
 import com.android.kuaikanmanhua.kuaikan.adapter.Group5Adapter;
-import com.android.kuaikanmanhua.kuaikan.adapter.RecycleAdapter;
 import com.android.kuaikanmanhua.kuaikan.bean.Advert;
 import com.android.kuaikanmanhua.kuaikan.bean.ExceptAdvert;
+import com.android.kuaikanmanhua.kuaikan.bean.HelpBean;
 import com.android.kuaikanmanhua.kuaikan.util.HttpUtil;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
 import com.android.kuaikanmanhua.kuaikan.util.IRequestCallBack;
@@ -31,6 +35,7 @@ import com.android.kuaikanmanhua.kuaikan.util.URLConstants;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +46,7 @@ public class ProHotFragment extends Fragment {
 
     private List<Advert.DataBean.BannerGroupBean> banner;
     private ArrayList<String> adUrls;
+    private Advert advert;
 
     private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> mGroup1List;
     private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> mGroup4List;
@@ -57,10 +63,10 @@ public class ProHotFragment extends Fragment {
     private Group3Adapter group3Adapter;
     private GridView gridView5;
     private GridView gridView3;
-    private List<ExceptAdvert.DataBean.InfosBean.TopicsBean>mGroup3List;
+    private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> mGroup3List;
     private ExceptAdvert group3;
     private RecyclerView recycleView;
-    private List<ExceptAdvert.DataBean.InfosBean.TopicsBean>mGroup2List;
+    private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> mGroup2List;
     private ExceptAdvert group2;
     private RecycleAdapter recycleAdapter;
     private ImageView array1;
@@ -83,21 +89,58 @@ public class ProHotFragment extends Fragment {
         //第一组图片
         gridView1 = (GridView) view.findViewById(R.id.gridview_group1);
         //第二组图片
-        recycleView =(RecyclerView)view.findViewById(R.id.recycleView_group2);
+        recycleView = (RecyclerView) view.findViewById(R.id.recycleView_group2);
         //第三组图片
-        gridView3=(GridView)view.findViewById(R.id.gridview_group3);
+        gridView3 = (GridView) view.findViewById(R.id.gridview_group3);
         //第四组图片
-        gridView4=(GridView)view.findViewById(R.id.gridview_group4);
+        gridView4 = (GridView) view.findViewById(R.id.gridview_group4);
         //第五组图片
-        gridView5=(GridView)view.findViewById(R.id.gridview_group5);
+        gridView5 = (GridView) view.findViewById(R.id.gridview_group5);
         //几个箭头
-        array1=(ImageView) view.findViewById(R.id.array1);
-        array2=(ImageView) view.findViewById(R.id.array2);
-        array3=(ImageView) view.findViewById(R.id.array3);
+        array1 = (ImageView) view.findViewById(R.id.array1);
+        array2 = (ImageView) view.findViewById(R.id.array2);
+        array3 = (ImageView) view.findViewById(R.id.array3);
 
         initGroups();
+        initArrayListener();
         return view;
     }
+
+    private void initArrayListener() {
+        array1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpBean bean =new HelpBean(4,"人气飙升");
+                Intent intent = click(bean);
+                startActivity(intent);
+            }
+        });
+        array2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpBean bean =new HelpBean(5,"新作出炉");
+                Intent intent = click(bean);
+                startActivity(intent);
+            }
+        });
+        array3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpBean bean =new HelpBean(3,"主编推荐");
+                Intent intent = click(bean);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public Intent  click(HelpBean bean){
+        Intent intent=new Intent(getActivity(),ProHotArrayActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("bean",bean);
+        intent.putExtra("bean",bundle);
+        return  intent;
+    }
+
 
     private void initGroups() {
         initBanner();
@@ -110,13 +153,37 @@ public class ProHotFragment extends Fragment {
     }
 
 
-//--------------------------------------加载广告------------------------------------------
+    //--------------------------------------加载广告------------------------------------------
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     private void initBanner() {
         initAdvert();
         initBannerListener();
     }
+    //广告的监听
+    private void initBannerListener() {
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                int type=advert.getData().getBanner_group().get(position).getType();
+                String value = advert.getData().getBanner_group().get(position).getValue();
+                switch (type){
+                    case 1:
+                        break;
+                    case 2:
+                        Intent intent=new Intent(getActivity(),OpusActivity.class);
 
+                        intent.putExtra("id",  Integer .valueOf(value));
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        Intent intent2=new Intent(getActivity(),FullscreenActivity.class);
+                        intent2.putExtra("id",Integer .valueOf(value));
+                        startActivity(intent2);
+                        break;
+                }
+            }
+        });
+    }
     private void initAdvert() {
         adUrls = new ArrayList<>();
         banner = new ArrayList<>();
@@ -124,14 +191,14 @@ public class ProHotFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Gson gson = new Gson();
-                Advert advert = gson.fromJson(result, Advert.class);
-                if(advert!=null && advert.getData()!=null){
-                Advert.DataBean dataBean = advert.getData();
-                banner.addAll(dataBean.getBanner_group());
-                for (int i = 0; i < banner.size(); i++) {
-                    adUrls.add(banner.get(i).getPic());
-                }
-                setUpConvenientBanner();
+                advert = gson.fromJson(result, Advert.class);
+                if (advert != null && advert.getData() != null) {
+                    Advert.DataBean dataBean = advert.getData();
+                    banner.addAll(dataBean.getBanner_group());
+                    for (int i = 0; i < banner.size(); i++) {
+                        adUrls.add(banner.get(i).getPic());
+                    }
+                    setUpConvenientBanner();
                 }
             }
         });
@@ -168,23 +235,27 @@ public class ProHotFragment extends Fragment {
         }
     }
 
-    //广告的监听
-    private void initBannerListener() {
-
-    }
 //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 //---------------------------------广告部分-----------------------------------------------
 
-//-----------------------------第一组图片Group1-------------------------------------------
+    //-----------------------------第一组图片Group1-------------------------------------------
     private void initGroup1() {
         initData();
         initAdapter();
         bindAdapter();
         initListener();
     }
+
     //第一组图片的监听
     private void initListener() {
-
+        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), OpusActivity.class);
+                intent.putExtra("id", mGroup1List.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindAdapter() {
@@ -218,10 +289,8 @@ public class ProHotFragment extends Fragment {
 //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 //-----------------------------第一组图片Group1--------------------------------------------
 
-    
-    
 
-//-----------------------------第二组图片Group2---------------------------------------------
+    //-----------------------------第二组图片Group2---------------------------------------------
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     private void initGroup2() {
         initData2();
@@ -233,16 +302,18 @@ public class ProHotFragment extends Fragment {
     private void initListener2() {
 
     }
+
     private void bindAdapter2() {
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 3,
                 LinearLayoutManager.HORIZONTAL, false);
         recycleView.setLayoutManager(manager);
         recycleView.setAdapter(recycleAdapter);
     }
-    
+
     private void initAdapter2() {
-        recycleAdapter=new RecycleAdapter(mGroup2List,getActivity());
+        recycleAdapter = new RecycleAdapter(mGroup2List, getActivity());
     }
+
     private void initData2() {
         mGroup2List = new ArrayList<>();
         OkHttpTool.newInstance().start(URLConstants.URL_OTHER).callback(new IOKCallBack() {
@@ -267,8 +338,7 @@ public class ProHotFragment extends Fragment {
 //-----------------------------第二组图片Group2--------------------------------------------
 
 
-
-//-----------------------------第三组图片Group3---------------------------------------------
+    //-----------------------------第三组图片Group3---------------------------------------------
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     private void initGroup3() {
         initData3();
@@ -278,7 +348,14 @@ public class ProHotFragment extends Fragment {
     }
 
     private void initListener3() {
-
+        gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), OpusActivity.class);
+                intent.putExtra("id", mGroup3List.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindAdapter3() {
@@ -312,9 +389,7 @@ public class ProHotFragment extends Fragment {
 //-----------------------------第二组图片Group3--------------------------------------------
 
 
-
-
-//-----------------------------第四组图片Group4---------------------------------------------
+    //-----------------------------第四组图片Group4---------------------------------------------
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     private void initGroup4() {
         initData4();
@@ -325,7 +400,14 @@ public class ProHotFragment extends Fragment {
 
 
     private void initListener4() {
-
+        gridView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), OpusActivity.class);
+                intent.putExtra("id", mGroup4List.get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initAdapter4() {
@@ -360,9 +442,7 @@ public class ProHotFragment extends Fragment {
 //-----------------------------第四组图片Group4--------------------------------------------
 
 
-
-
-//-----------------------------第五组图片Group5---------------------------------------------
+    //-----------------------------第五组图片Group5---------------------------------------------
 //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     private void initGroup5() {
         initData5();
@@ -372,7 +452,14 @@ public class ProHotFragment extends Fragment {
     }
 
     private void initListener5() {
-
+        gridView5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), FullscreenActivity.class);
+                intent.putExtra("id", mGroup5List.get(position).getTarget_id());
+                startActivity(intent);
+            }
+        });
     }
 
     private void bindAdapter5() {
@@ -380,7 +467,7 @@ public class ProHotFragment extends Fragment {
     }
 
     private void initAdapter5() {
-        group5Adapter=new Group5Adapter(getActivity(),R.layout.group5_item,mGroup5List);
+        group5Adapter = new Group5Adapter(getActivity(), R.layout.group5_item, mGroup5List);
     }
 
     private void initData5() {
@@ -406,4 +493,63 @@ public class ProHotFragment extends Fragment {
 //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 //---------------------------------------------------------------------------------------
 
-}
+    //------------recyler view  适配器
+
+    class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
+        private List<ExceptAdvert.DataBean.InfosBean.TopicsBean> list;
+        private Context context;
+
+        public RecycleAdapter(List<ExceptAdvert.DataBean.InfosBean.TopicsBean> list, Context context) {
+            this.list = list;
+            this.context = context;
+        }
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context).
+                    inflate(R.layout.group2_item, null);
+            return new MyViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            Picasso.with(context).load(list.get(position).getCover_image_url()).into(holder.iv_icon);
+            holder.tv_title.setText(list.get(position).getTitle());
+            holder.tv_author.setText(list.get(position).getUser().getNickname());
+            holder.iv_icon.setTag(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return list == null ? 0 : list.size();
+        }
+
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
+
+        final ImageView iv_icon;
+        final TextView tv_title;
+        final TextView tv_author;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            iv_icon = (ImageView) itemView.findViewById(R.id.iv_group2_item);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_group2_title);
+            tv_author = (TextView) itemView.findViewById(R.id.tv_group2_author);
+            iv_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        int position = Integer.parseInt(iv_icon.getTag().toString());
+                        Intent intent = new Intent(getActivity(), OpusActivity.class);
+                        intent.putExtra("id", mGroup2List.get(position).getId());
+                        startActivity(intent);
+                    } catch (NumberFormatException e) {
+                        //  数字 转换异常
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }}

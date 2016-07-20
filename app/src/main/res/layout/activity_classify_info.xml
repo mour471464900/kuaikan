@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:onClick="BackToClassify"
             android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/ic_up_indicator" />
 
         <TextView

@@ -114,7 +114,18 @@ public class ProductionFragment extends Fragment {
         curIndex=i;
     }
 
-
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager manager=getFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        Fragment fragment=mFragmentList.get(0);
+        if(curIndex!=0){
+            transaction.show(fragment).hide(mFragmentList.get(1));}
+        transaction.commit();
+        // 当返回的时候  ，总是在热门分类的界面
+        curIndex=0;
+    }*/
 }
 
 

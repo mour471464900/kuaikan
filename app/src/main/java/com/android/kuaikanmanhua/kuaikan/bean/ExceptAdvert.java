@@ -88,7 +88,7 @@ public class ExceptAdvert {
                 this.banners = banners;
             }
 
-            public static class BannersBean {
+            public static class BannersBean implements Serializable{
                 private int id;
                 private String pic;
                 private int target_id;
