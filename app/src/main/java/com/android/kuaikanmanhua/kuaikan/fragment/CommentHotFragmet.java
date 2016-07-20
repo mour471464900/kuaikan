@@ -241,16 +241,16 @@ public class CommentHotFragmet extends Fragment {
             viewHolder.comments_count.setTag(position);
             viewHolder.iv_show.setTag(position);
 //            点击回复跳转到回复界面
-        viewHolder.comments_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int postion= (int) buttonView.getTag();
-                Intent intent=new Intent(getActivity(),CommentReplyActivity.class);
+            viewHolder.comments_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int postion= (int) buttonView.getTag();
+                    Intent intent=new Intent(getActivity(),CommentReplyActivity.class);
 //        调到回复ACtivity
-                intent.putExtra("id",mlist.get(position).getFeed_id());
-                startActivity(intent);
-            }
-        });
+                    intent.putExtra("id",mlist.get(position).getFeed_id());
+                    startActivity(intent);
+                }
+            });
             String Date = returnDate((mlist.get(position).getUpdated_at()));
             viewHolder.tv_data.setText(Date);
 
@@ -258,11 +258,11 @@ public class CommentHotFragmet extends Fragment {
             viewHolder.likes_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked=true){
+                    if(isChecked){
                       int postion= (int) buttonView.getTag();
                         buttonView.setText("" + (mlist.get(position).getLikes_count()+1));
                     }else {
-                        buttonView.setText("" + (mlist.get(position).getLikes_count()-1));
+                        buttonView.setText("" + mlist.get(position).getLikes_count());
                     }
                 }
             });

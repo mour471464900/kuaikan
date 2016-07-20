@@ -101,6 +101,9 @@
         <activity android:name=".activity.OpusActivity"
              android:theme="@style/NoBar"
             ></activity>
+        <activity android:name=".activity.CommentContext2Activity"
+            android:theme="@style/NoBar"
+            ></activity>
     </application>
 
 </manifest>

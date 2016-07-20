@@ -38,7 +38,7 @@
         android:id="@+id/lv_comment_hot_context_listview"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -55,6 +55,7 @@
         >
 
         <EditText
+            android:id="@+id/et_content"
             android:layout_width="wrap_content"
             android:minEms="12"
            android:drawableLeft="@drawable/ic_commenting"
@@ -65,7 +66,7 @@
             android:layout_marginLeft="15dp"
             android:drawablePadding="10dp"
             />
-        <ImageView3
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_home_comment_normal"

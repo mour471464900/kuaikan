@@ -53,4 +53,8 @@ public static final String comment_icon_dynamic_start="http://api.kuaikanmanhua.
     // http://api.kuaikanmanhua.com/v1/topics/search?keyword=神&offset=0&limit=20
 public static final String SEARCH_START="http://api.kuaikanmanhua.com/v1/topics/search?keyword=";
     public static final String SEARCH_END="&offset=0&limit=20";
+
+    //http://api.kuaikanmanhua.com/v1/comments/feed/18480773846302720/order/time?offset=0&limit=20
+    public static final String ZUIXIN_CONTENT_START="http://api.kuaikanmanhua.com/v1/comments/feed/";
+    public static final String ZUIXIN_CONTENT_END="/order/time?offset=0&limit=20";
 }

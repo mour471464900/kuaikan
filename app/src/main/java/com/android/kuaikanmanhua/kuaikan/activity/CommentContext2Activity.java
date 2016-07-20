@@ -1,23 +1,21 @@
 package com.android.kuaikanmanhua.kuaikan.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.HotGridViewAdapter;
-import com.android.kuaikanmanhua.kuaikan.bean.CommentHotBean;
-import com.android.kuaikanmanhua.kuaikan.bean.CommentHotContextBean;
+
+
+import com.android.kuaikanmanhua.kuaikan.bean.CommentZUIXINContentBean;
+import com.android.kuaikanmanhua.kuaikan.bean.CommentZuiXinBean;
 import com.android.kuaikanmanhua.kuaikan.common.SevenDayUrl;
 import com.android.kuaikanmanhua.kuaikan.custom.CustomGridView;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
@@ -33,14 +31,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-//评论热门跳转的内容界面
-public class CommentContextActivity extends Activity {
+
+/**
+ * Created by MBENBEN on 2016/7/20.
+ */
+public class CommentContext2Activity extends AppCompatActivity {
     @BindView(R.id.lv_comment_hot_context_listview)
     ListView mlistview;
-   @BindView(R.id.et_content)
-    EditText et;
-List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
-    private CommentHotBean.DataBean.FeedsBean feedBean;
+    List<CommentZUIXINContentBean.DataBean.CommentsBean> sBean=new ArrayList<>();
+    private CommentZuiXinBean.DataBean.FeedsBean feedBean;
     private MyAdapter myAdapter;
     private View header;
     private CircleImageView iv_show;
@@ -53,56 +52,55 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
     private HotGridViewAdapter gridViewAdapter;
     private View tail;
     private TextView tv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_comment_context);
         ButterKnife.bind(this);
-         header=LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_header,null);
-      mlistview.addHeaderView(header);
-        tail=LayoutInflater.from(CommentContextActivity.this).inflate(R.layout.comment_context_list_tail,null);
+        header= LayoutInflater.from(CommentContext2Activity.this).inflate(R.layout.comment_context_list_header,null);
+        mlistview.addHeaderView(header);
+        tail=LayoutInflater.from(CommentContext2Activity.this).inflate(R.layout.comment_context_list_tail,null);
         mlistview.addFooterView(tail);
         initBean();
         initData();
         setAdapter();
         bindAdapter();
         initHeader();
-       initListen();
-
+        initListen();
     }
 
-    private void initListen() {
-         tv= (TextView) findViewById(R.id.tv_gengduo);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(CommentContextActivity.this,CommentReplyActivity.class);
+        private void initListen() {
+
+                tv= (TextView) findViewById(R.id.tv_gengduo);
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(CommentContext2Activity.this,CommentReplyActivity.class);
 //        调到回复ACtivity
-                intent.putExtra("id",feedBean.getFeed_id());
-                startActivity(intent);
-            }
-        });
-    }
+                        intent.putExtra("id",feedBean.getFeed_id());
+                        startActivity(intent);
+                    }
+                });
 
+    }
 
     private void initHeader() {
         iv_show = (CircleImageView)header. findViewById(R.id.iv_comment_hot_icon2);
-       tv_name = (TextView)header. findViewById(R.id.iv_comment_hot_name2);
-       tv_context = (TextView)header. findViewById(R.id.tv_hot_text2);
+        tv_name = (TextView)header. findViewById(R.id.iv_comment_hot_name2);
+        tv_context = (TextView)header. findViewById(R.id.tv_hot_text2);
         gv_picture = (CustomGridView) header.findViewById(R.id.gv_hot_picture);
         tv_data = (TextView)header. findViewById(R.id.tv_hot_data2);
         likes_count = (TextView)header. findViewById(R.id.tv_hot_likes_count2);
-       comments_count = (TextView) header.findViewById(R.id.tv_hot_comments_count2);
+        comments_count = (TextView) header.findViewById(R.id.tv_hot_comments_count2);
 
-        Picasso.with(CommentContextActivity.this).load(feedBean.getUser().getAvatar_url()).into(iv_show);
-       tv_name.setText(feedBean.getUser().getNickname());
+        Picasso.with(CommentContext2Activity.this).load(feedBean.getUser().getAvatar_url()).into(iv_show);
+        tv_name.setText(feedBean.getUser().getNickname());
         tv_context.setText(feedBean.getContent().getText());
         String Date = returnDate((feedBean.getUpdated_at())/1000);
         tv_data.setText(Date);
-      likes_count.setText("" + feedBean.getLikes_count());
-       comments_count.setText("" + feedBean.getComments_count());
+        likes_count.setText("" + feedBean.getLikes_count());
+        comments_count.setText("" + feedBean.getComments_count());
         List<String> list = new ArrayList<>();
         list.addAll(feedBean.getContent().getImages());
         int layoutId = 0;
@@ -110,39 +108,39 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
             gv_picture.setNumColumns(1);
             layoutId = R.layout.comment_hot_fragment_gridview2;
         }else {
-      gv_picture.setNumColumns(3);
+            gv_picture.setNumColumns(3);
             layoutId = R.layout.comment_hot_fragment_gridview;
         }
-        gridViewAdapter = new HotGridViewAdapter(CommentContextActivity.this, layoutId, list);
+        gridViewAdapter = new HotGridViewAdapter(CommentContext2Activity.this, layoutId, list);
         gv_picture.setAdapter(gridViewAdapter);
         gridViewAdapter.notifyDataSetChanged();
     }
 
     private void bindAdapter() {
-      mlistview.setAdapter(myAdapter);
+        mlistview.setAdapter(myAdapter);
     }
 
     private void setAdapter() {
-      myAdapter=new MyAdapter();
+        myAdapter=new MyAdapter();
     }
 
     //得到外界传入的对象
     private void initBean() {
         Intent intent=getIntent();
-        if(intent.getSerializableExtra("bean")!=null){
-      feedBean= (CommentHotBean.DataBean.FeedsBean) intent.getSerializableExtra("bean");
+        if(intent!=null){
+            feedBean= (CommentZuiXinBean.DataBean.FeedsBean) intent.getSerializableExtra("bean");
 
         }
     }
 
     private void initData() {
-        OkHttpTool.newInstance().start(SevenDayUrl.COMMENT_START_HOT_CONTEXT+feedBean.getFeed_id()+SevenDayUrl.COMMENT_END_HOT_CONTEXT).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(SevenDayUrl.ZUIXIN_CONTENT_START+feedBean.getFeed_id()+SevenDayUrl.ZUIXIN_CONTENT_END).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
-          Gson gson=new Gson();
-                CommentHotContextBean ContextBean=gson.fromJson(result,CommentHotContextBean.class);
+                Gson gson=new Gson();
+                CommentZUIXINContentBean ContextBean=gson.fromJson(result,CommentZUIXINContentBean.class);
 
-           sBean.addAll(ContextBean.getData().getComments());
+                sBean.addAll(ContextBean.getData().getComments());
                 myAdapter.notifyDataSetChanged();
             }
         });
@@ -156,7 +154,7 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
 
 
 
-    class MyAdapter extends BaseAdapter{
+    class MyAdapter extends BaseAdapter {
 
 
         @Override
@@ -178,7 +176,7 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = LayoutInflater.from(CommentContextActivity.this).
+                convertView = LayoutInflater.from(CommentContext2Activity.this).
                         inflate(R.layout.comment_context_list, null);
                 viewHolder = new ViewHolder();
                 viewHolder.iv_show = (CircleImageView) convertView.findViewById(R.id.iv_comment_hot_icon1);
@@ -186,32 +184,20 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
                 viewHolder.tv_context = (TextView) convertView.findViewById(R.id.tv_hot_text1);
 
                 viewHolder.tv_data = (TextView) convertView.findViewById(R.id.tv_comment_hot_data1);
-                viewHolder.tv= (TextView) convertView.findViewById(R.id.tv_hot_comments_count1);
+
 
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             }
-            //````````````````````````````````````````````````````````````````
-
-            Picasso.with(CommentContextActivity.this).load(sBean.get(position).getUser().getAvatar_url()).into(viewHolder.iv_show);
+            Picasso.with(CommentContext2Activity.this).load(sBean.get(position).getUser().getAvatar_url()).into(viewHolder.iv_show);
             viewHolder.tv_name.setText(sBean.get(position).getUser().getNickname());
             viewHolder.tv_context.setText(sBean.get(position).getContent());
 
             String Date = returnDate((sBean.get(position).getCreated_at()));
             viewHolder.tv_data.setText(Date);
-            viewHolder.tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    et.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
-                        }
-                    });
-                }
-            });
 
             return convertView;
         }
@@ -221,9 +207,8 @@ List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
         TextView tv_context;
         TextView tv_name;
         TextView tv_data;
-        TextView tv;
     }
-//  返回
+    //  返回
     public void onBack(View view) {
         finish();
     }

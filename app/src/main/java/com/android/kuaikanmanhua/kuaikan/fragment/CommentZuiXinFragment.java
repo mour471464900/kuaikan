@@ -1,18 +1,26 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
+import com.android.kuaikanmanhua.kuaikan.activity.CommentContext2Activity;
+
+import com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.CommentReplyActivity;
 import com.android.kuaikanmanhua.kuaikan.adapter.HotGridViewAdapter;
-import com.android.kuaikanmanhua.kuaikan.bean.CommentHotBean;
+
 import com.android.kuaikanmanhua.kuaikan.bean.CommentZuiXinBean;
 import com.android.kuaikanmanhua.kuaikan.common.SevenDayUrl;
 import com.android.kuaikanmanhua.kuaikan.custom.CustomGridView;
@@ -41,7 +49,7 @@ public class CommentZuiXinFragment extends Fragment {
     List<CommentZuiXinBean.DataBean.FeedsBean> mlist=new ArrayList<>();;
     private ZuiXinAdapter ZXAdapter;
     private HotGridViewAdapter gridViewAdapter;
-    boolean res=true;
+    private ListView refreshableView;
     int i=2;
      public static CommentZuiXinFragment newInstance(Bundle args){
          CommentZuiXinFragment fragment=new CommentZuiXinFragment();
@@ -54,12 +62,28 @@ public class CommentZuiXinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.comment_hot_fragment,container,false);
         ButterKnife.bind(this,view);
+        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        refreshableView = pullToRefreshListView.getRefreshableView();
         //初始化数据
         initData();
         setAdapter();
         bindAdapter();
         initRefreshListen();
+        initListen();
+
         return view;
+    }
+
+    private void initListen() {
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), CommentContext2Activity.class);
+                intent.putExtra("bean",mlist.get(position-1));
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initRefreshListen() {
@@ -172,7 +196,7 @@ public class CommentZuiXinFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView==null){
                 convertView = LayoutInflater.from(getActivity()).
@@ -183,19 +207,57 @@ public class CommentZuiXinFragment extends Fragment {
                 viewHolder.tv_context= (TextView) convertView.findViewById(R.id.tv_hot_text);
                 viewHolder.gv_picture= (CustomGridView) convertView.findViewById(R.id.gv_hot_picture);
                 viewHolder.tv_data= (TextView) convertView.findViewById(R.id.tv_hot_data);
-                viewHolder.likes_count= (TextView) convertView.findViewById(R.id.tv_hot_likes_count);
-                viewHolder.comments_count= (TextView) convertView.findViewById(R.id.tv_hot_comments_count);
+                viewHolder.likes_count= (CheckBox) convertView.findViewById(R.id.tv_hot_likes_count);
+                viewHolder.comments_count= (CheckBox) convertView.findViewById(R.id.tv_hot_comments_count);
                 convertView.setTag(viewHolder);
             }else {
                 viewHolder= (ViewHolder) convertView.getTag();
 
             }
+            //设置position
+            viewHolder.likes_count.setTag(position);
+            viewHolder.comments_count.setTag(position);
+            viewHolder.iv_show.setTag(position);
+            //头像监听跳转到CommentIconActivity
+            viewHolder.iv_show.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int postion= (int) v.getTag();
+                    Intent intent=new Intent(getActivity(), CommentIconActivity.class);
+                    intent.putExtra("bean",mlist.get(position).getUser().getId());
+                    startActivity(intent);
+                }
+            });
+//            点击回复跳转到回复界面
+            viewHolder.comments_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int postion= (int) buttonView.getTag();
+                    Intent intent=new Intent(getActivity(),CommentReplyActivity.class);
+//        调到回复ACtivity
+                    intent.putExtra("id",mlist.get(position).getFeed_id());
+                    startActivity(intent);
+                }
+            });
             Picasso.with(getActivity()).load(mlist.get(position).getUser().getAvatar_url()).into(viewHolder.iv_show);
             viewHolder.tv_name.setText(mlist.get(position).getUser().getNickname());
             viewHolder.tv_context.setText(mlist.get(position).getContent().getText());
             String Date=returnDate((mlist.get(position).getUpdated_at()));
             viewHolder.tv_data.setText(Date);
             viewHolder.likes_count.setText(""+mlist.get(position).getLikes_count());
+            //            ------点赞按钮的点击--------
+            viewHolder.likes_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        int postion= (int) buttonView.getTag();
+                        buttonView.setText("" + (mlist.get(position).getLikes_count()+1));
+                    }else {
+                        buttonView.setText("" + mlist.get(position).getLikes_count());
+                    }
+                }
+            });
+
             viewHolder.comments_count.setText(""+mlist.get(position).getComments_count());
 
             List<String> list=new ArrayList<>();
@@ -225,7 +287,7 @@ public class CommentZuiXinFragment extends Fragment {
         TextView tv_name;
         CustomGridView gv_picture;
        TextView tv_data;
-        TextView likes_count;
-               TextView comments_count;
+        CheckBox likes_count;
+        CheckBox comments_count;
     }
 }
