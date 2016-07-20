@@ -431,6 +431,9 @@ public class ProHotFragment extends Fragment {
 
 
 
+
+
+
                     for (int i = 0; i < 6; i++) {
                         mGroup4List.add(topicsBeanList4.get(i));
                     }
