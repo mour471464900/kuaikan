@@ -7,7 +7,7 @@
 
 
     <ListView
-
+        android:background="#ffffff"
         android:id="@+id/lv_comment_datum"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

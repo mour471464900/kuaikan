@@ -9,6 +9,10 @@ public class URLConstants {
 
     //热门除了广告外的
     public static final String URL_OTHER = "http://api.kuaikanmanhua.com/v1/topic_lists/mixed/new";
+
+    //热门界面条目箭头的点击
+    public static final String URL_PRO_ARRAY_START="http://api.kuaikanmanhua.com/v1/topic_lists/";
+    public static final String URL_PRO_ARRAY_END="?offset=0";
     //分类
     public static final String URL_CLASSIFY = "http://api.kuaikanmanhua.com/v1/tag/suggestion";
     //分类的点击

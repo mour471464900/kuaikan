@@ -39,7 +39,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_information"
@@ -75,7 +75,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_watch"
@@ -113,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_updata"
@@ -165,7 +165,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_collect"
@@ -203,7 +203,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_ai"
@@ -254,7 +254,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
     <LinearLayout
         android:id="@+id/ll_user_set"
@@ -290,6 +290,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/darker_gra" />
+        android:background="@color/darker" />
 
 </LinearLayout>

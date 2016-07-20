@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.ClassifyInfoAdapter;
@@ -34,16 +36,34 @@ public class SearchActivity extends Activity {
     @BindView(R.id.et_search_text)
     EditText editText;
     @BindView(R.id.sv_buttom1)
-    ScrollableListView mScrollableListView;
+    ListView mScrollableListView;
     List<SearchBean.DataBean.TopicsBean> mlist = new ArrayList<>();
+    //     给listview 设置空视图 要在listview 的下方，写一个视图
+    @BindView(R.id.tv_empty)
+    View empty;
+//    这个是历史记录的集合
+    @BindView(R.id.lv_search_record)
+    ListView recordListView;
+
     private SearchAdapter infoAdapter;
-    private View view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+//       初始化搜索的集合
+        setupSearchList();
+//        初始化greendao的帮助类
+        initGreenDao();
+    }
+
+    private void initGreenDao() {
+
+    }
+
+    private void setupSearchList() {
         initView();
         initListen();
         initListListen();
@@ -59,43 +79,33 @@ public class SearchActivity extends Activity {
                 finish();
             }
         });
+        mScrollableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //  长按删除该条目，对于listview 条目的删除。是删除适配器集合的元素
+                 mlist.remove(position);// 这个就是当前条目的元素
+//                mlist.removeAll(mlist);
+                infoAdapter.notifyDataSetChanged();
+                // 当删除数据之后，要通知适配器更新
+                return true;
+            }
+        });
     }
 
     private void initView() {
-        view = LayoutInflater.from(this).inflate(R.layout.empty_search, null);
-
     }
 
     private void initListen() {
-
-
-        TextWatcher watcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                initData();
-            }
-        };
-        editText.addTextChangedListener(watcher);
     }
 
     private void initAdapter() {
         infoAdapter = new SearchAdapter(this, R.layout.item_classify_info, mlist);
         mScrollableListView.setAdapter(infoAdapter);
-        // mScrollableListView.setEmptyView(view);
+//         设置当加载数据的时候 ，集合没有数据的时候显示空视图
+        mScrollableListView.setEmptyView(empty);
     }
 
     private void initData() {
-
         String text = editText.getText().toString();
         String encode = null;
         try {
@@ -103,28 +113,29 @@ public class SearchActivity extends Activity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        if (text != null) {
+        if (!TextUtils.isEmpty(text)) {
             OkHttpTool.newInstance().start(SevenDayUrl.SEARCH_START + encode + SevenDayUrl.SEARCH_END).callback(new IOKCallBack() {
                 @Override
                 public void success(String result) {
                     Gson gson = new Gson();
                     SearchBean bean = gson.fromJson(result, SearchBean.class);
-                    if (result != null && bean != null) {
+                    if (result != null && bean.getData()!= null) {
                         mlist.addAll(bean.getData().getTopics());
                         initAdapter();
                         infoAdapter.notifyDataSetChanged();
+//                        通知适配器刷新
                     }
-
-
                 }
             });
         }
-
-
     }
-
-
+    //   返回键
     public void onCancel(View view) {
         finish();
+    }
+
+//    按搜索键来进行
+    public void onSearch(View view) {
+        initData();
     }
 }

@@ -151,7 +151,6 @@ public class OpusActivity extends AppCompatActivity {
         if (intent != null) {
             id = intent.getIntExtra("id", 0);
 //            得到的i
-            Toast.makeText(OpusActivity.this, "" + id, Toast.LENGTH_SHORT).show();
         }
     }
 

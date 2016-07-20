@@ -7,17 +7,24 @@
     android:background="#FFFFFF"
     tools:context="com.android.kuaikanmanhua.kuaikan.activity.SearchActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorContent"
         android:padding="10dp">
+        <ImageView
+            android:onClick="onCancel"
+            android:src="@drawable/ic_ab_back"
+            android:layout_width="30dp"
+            android:layout_centerVertical="true"
+            android:layout_height="30dp" />
         <EditText
+            android:layout_centerHorizontal="true"
             android:id="@+id/et_search_text"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:ems="13"
             android:background="@drawable/shape_ed"
             android:hint="搜索作品名、作者名"
             android:gravity="center_vertical"
@@ -26,22 +33,46 @@
             android:textColorHint="@color/darker_gray"
             android:textCursorDrawable="@color/colorContent"
             android:drawableLeft="@drawable/ic_home_nav_search_pressed"/>
+        <!--  android:textCursorDrawable
+              输入框的 闪烁的颜色
+          -->
         <TextView
-            android:layout_width="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="取消"
-            android:gravity="center"
+            android:text="搜索"
+            android:layout_marginTop="3dp"
             android:textSize="20sp"
-            android:layout_marginTop="5dp"
-            android:onClick="onCancel"
-            android:clickable="true"/>
-
-
-    </LinearLayout>
-    <com.mob.tools.gui.ScrollableListView
+            android:onClick="onSearch"
+            android:src="@drawable/ic_home_nav_search_pressed"
+           />
+    </RelativeLayout>
+    <!-- 历史记录的listview-->
+    <ListView
+        android:id="@+id/lv_search_record"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        ></ListView>
+    <!-- 当前显示搜索内容的-->
+    <ListView
         android:id="@+id/sv_buttom1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <!--空视图-->
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/ic_content_empty"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="@string/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>

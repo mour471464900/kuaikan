@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.ClassifyInfoAdapter;
 import com.android.kuaikanmanhua.kuaikan.bean.ClassifyInfoBean;
 import com.android.kuaikanmanhua.kuaikan.bean.ClassifyBean;
+import com.android.kuaikanmanhua.kuaikan.bean.FullWatchBean;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
 import com.android.kuaikanmanhua.kuaikan.util.OkHttpTool;
 import com.android.kuaikanmanhua.kuaikan.util.URLConstants;
@@ -31,11 +33,13 @@ public class ClassifyInfoActivity extends Activity {
     private ClassifyInfoAdapter infoAdapter;
     private ClassifyBean.DataBean.SuggestionBean suggestionBean;
 
-
     @BindView(R.id.tv_banner_title_name)
     TextView tv_title;
     @BindView(R.id.sv_buttom)
     ScrollableListView mScrollableListView;
+
+    private ClassifyInfoBean classifyInfoBean;
+    private String encode;
 
 
     @Override
@@ -48,6 +52,7 @@ public class ClassifyInfoActivity extends Activity {
 
     }
 
+
     private void setupListView() {
         //初始化数据
         initData();
@@ -55,6 +60,21 @@ public class ClassifyInfoActivity extends Activity {
         initAdapter();
         //绑定适配器
         bindAdapter();
+        //设置监听
+        initListener();
+    }
+
+
+
+    private void initListener() {
+        mScrollableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(ClassifyInfoActivity.this,OpusActivity.class);
+                intent.putExtra("id",classifyInfoBean.getData().getTopics().get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initData() {
@@ -69,14 +89,13 @@ public class ClassifyInfoActivity extends Activity {
         initListViewData();
     }
 
-
     /**
      * 异步任务取得
      * 设置listview 的数据
      */
     private void initListViewData() {
         itemsBeanList = new ArrayList<>();
-        String encode = null;
+
         try {
             encode = URLEncoder.encode(title, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -87,7 +106,7 @@ public class ClassifyInfoActivity extends Activity {
                     @Override
                     public void success(String result) {
                         Gson gson = new Gson();
-                        ClassifyInfoBean classifyInfoBean = gson.fromJson(result, ClassifyInfoBean.class);
+                         classifyInfoBean = gson.fromJson(result, ClassifyInfoBean.class);
                         if (classifyInfoBean != null) {
 
                             itemsBeanList.addAll(classifyInfoBean.getData().getTopics());

@@ -66,4 +66,15 @@
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetEnd">0dp</item>
     </style>
+<!--   RadioButton 里面 textsize
+           为0dp    解决只显示图片。 图片不居中的问题
+        -->
+    <style name="MyRadioButton" >
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">0dp</item>
+    </style>
+
 </resources>

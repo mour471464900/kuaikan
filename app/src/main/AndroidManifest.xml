@@ -91,6 +91,9 @@
             android:name=".activity.FullscreenActivity"
             android:theme="@style/NoBar" />
         <!-- 全屏 -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/NoBar" />
         <!-- 热门回复界面 -->
         <activity
             android:name=".activity.MainReplyActivity"
@@ -104,6 +107,8 @@
         <activity android:name=".activity.CommentContext2Activity"
             android:theme="@style/NoBar"
             ></activity>
+        <activity android:name=".activity.ProHotArrayActivity"
+            android:theme="@style/NoBar"/>
     </application>
 
 </manifest>

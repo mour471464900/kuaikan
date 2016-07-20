@@ -254,7 +254,11 @@ public class SevenDayFragment extends Fragment {
             dianzhan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    dianzhan.setText("" + (bean.getLikes_count() + 1));
+                     if(isChecked){
+                         dianzhan.setText("" + (bean.getLikes_count() + 1));// 当选中时点赞+1
+                     }else {
+                         dianzhan.setText("" + bean.getLikes_count());// 点赞取消就 回复原样
+                     }
                 }
             });
 //              点击评论 跳转更多的评论
