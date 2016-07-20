@@ -429,6 +429,8 @@ public class ProHotFragment extends Fragment {
                     List<ExceptAdvert.DataBean.InfosBean.TopicsBean> topicsBeanList4 =
                             group4.getData().getInfos().get(3).getTopics();
 
+
+
                     for (int i = 0; i < 6; i++) {
                         mGroup4List.add(topicsBeanList4.get(i));
                     }
