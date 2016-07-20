@@ -7,7 +7,7 @@
       <View
           android:layout_width="match_parent"
           android:layout_height="10dp"
-          android:background="@color/darker_gray"
+          android:background="@color/darker"
           />
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/darker_gray"
+        android:background="@color/darker"
         />
     <TextView
         android:id="@+id/tv_comment_datum_introduce"
@@ -32,7 +32,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/darker_gray"
+        android:background="@color/darker"
         />
     <TextView
         android:layout_width="match_parent"
@@ -44,6 +44,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/darker_gray"
+        android:background="@color/darker"
         />
 </LinearLayout>

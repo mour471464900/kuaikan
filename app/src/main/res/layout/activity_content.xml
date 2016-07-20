@@ -16,38 +16,27 @@
         android:id="@+id/rg_main"
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/rb_main"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
+          style="@style/MyRadioButton"
             android:drawableTop="@drawable/slt_rb_zhongyao"
             />
         <RadioButton
             android:id="@+id/rb_production"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
+            style="@style/MyRadioButton"
             android:drawableTop="@drawable/slt_rb_zuoping"
            />
         <RadioButton
             android:id="@+id/rb_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
+            style="@style/MyRadioButton"
             android:drawableTop="@drawable/slt_rb_pinglun"
           />
         <RadioButton
             android:id="@+id/rb_user"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
+            style="@style/MyRadioButton"
             android:drawableTop="@drawable/slt_rb_user"
         />
     </RadioGroup>

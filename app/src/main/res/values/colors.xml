@@ -5,7 +5,8 @@
     <color name="colorAccent">#FFFFE940</color>
     <color name="colorContent">#FFFFE940</color>
     <color name="darker_gray">#AFAFAF</color>
-    <color name="darker_gra">#f2f2f2</color>
+    <color name="darker">#e2e1e1</color>
     <color name="black_overlay">#FFFFE940</color>
     <!-- color content 是app的主题颜色-->
+
 </resources>

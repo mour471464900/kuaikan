@@ -8,6 +8,7 @@
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/lv_comment_datum_list"
         android:layout_width="match_parent"
+        android:background="#ffffff"
         android:layout_height="match_parent"
         ></com.handmark.pulltorefresh.library.PullToRefreshListView>
 

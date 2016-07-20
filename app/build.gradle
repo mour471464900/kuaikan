@@ -45,4 +45,12 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
+
+
+//     fresco图片请求
+    compile 'com.facebook.fresco:fresco:0.9.0+'
+
+//     greendao 的依赖库
+    compile 'org.greenrobot:greendao:2.2.0'
+
 }

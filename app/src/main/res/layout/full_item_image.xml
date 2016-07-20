@@ -6,7 +6,6 @@
     <ImageView
         android:id="@+id/iv_full_image"
         android:scaleType="fitXY"
-        android:src="@drawable/ic_common_placeholder_l"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>
