@@ -143,13 +143,13 @@ public class ContentActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
+    //        横竖屏切换的时候保护现场
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
     }
 
-//        横竖屏切换的时候保护现场
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         switchFragment(0);
