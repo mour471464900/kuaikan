@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">kuaikan</string>
     <string name="follow_login">没有登录,超多精彩内容看不鸟</string>
-    <string name="clean_data" >清空搜索历史</string>
-    <string name="empty" >没有结果</string>
+    <string name="clean_data">清空搜索历史</string>
+    <string name="empty">没有结果</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>

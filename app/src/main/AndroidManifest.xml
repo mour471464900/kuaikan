@@ -98,15 +98,21 @@
         <activity
             android:name=".activity.MainReplyActivity"
             android:theme="@style/NoBar" />
-
-        <activity android:name=".activity.OpusActivity"
-             android:theme="@style/NoBar"
-            ></activity>
-        <activity android:name=".activity.CommentContext2Activity"
+        <activity
+            android:name=".activity.OpusActivity"
+            android:theme="@style/NoBar" />
+        <activity
+            android:name=".activity.CommentContext2Activity"
+            android:theme="@style/NoBar" />
+        <activity
+            android:name=".activity.ProHotArrayActivity"
+            android:theme="@style/NoBar" />
+        <activity
+            android:name=".activity.EnterActivity"
+            android:theme="@style/NoBar" />
+        <activity android:name=".activity.ForgetActivity"
             android:theme="@style/NoBar"
             ></activity>
-        <activity android:name=".activity.ProHotArrayActivity"
-            android:theme="@style/NoBar"/>
     </application>
 
 </manifest>
