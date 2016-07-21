@@ -36,7 +36,7 @@ public class MainZuiXinReplyFragment extends Fragment {
 
     List<CommentHotContextBean.DataBean.CommentsBean> sBean=new ArrayList<>();
     private MyAdapter myAdapter;
-    @BindView(R.id.lv_comment_hot_reply)
+    @BindView(R.id.lv_comment_hot_reply1)
     ListView mlistview;
     private int feedId;
 

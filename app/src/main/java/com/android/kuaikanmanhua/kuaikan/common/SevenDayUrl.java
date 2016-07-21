@@ -58,4 +58,8 @@ public static final String SEARCH_START="http://api.kuaikanmanhua.com/v1/topics/
     public static final String ZUIXIN_CONTENT_START="http://api.kuaikanmanhua.com/v1/comments/feed/";
     public static final String ZUIXIN_CONTENT_END="/order/time?offset=0&limit=20";
 
+
+    //http://api.kuaikanmanhua.com/v1/comments/feed/18633178751741952/order/score?offset=0&limit=20
+    public static final String ZUIXIN_CONTENT_START_1="http://api.kuaikanmanhua.com/v1/comments/feed/";
+    public static final String ZUIXIN_CONTENT_END_1="/order/score?offset=0&limit=20";
 }

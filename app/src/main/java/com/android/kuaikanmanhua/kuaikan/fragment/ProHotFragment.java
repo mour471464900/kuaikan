@@ -268,7 +268,8 @@ public class ProHotFragment extends Fragment {
 
     private void initData() {
         mGroup1List = new ArrayList<>();
-        OkHttpTool.newInstance().start(URLConstants.URL_OTHER).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(URLConstants.URL_OTHER).callback(
+                new IOKCallBack() {
             @Override
             public void success(String result) {
                 Gson gson = new Gson();

@@ -5,7 +5,7 @@
     tools:context="com.android.kuaikanmanhua.kuaikan.fragment.CommentZuiXinReplyFragment">
 
     <ListView
-        android:id="@+id/lv_comment_hot_reply"
+        android:id="@+id/lv_comment_hot_reply1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
