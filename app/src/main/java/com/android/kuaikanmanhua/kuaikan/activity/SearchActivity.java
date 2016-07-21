@@ -233,6 +233,4 @@ public class SearchActivity extends Activity implements View.OnClickListener, Ad
             });
         }
     }
-
-
 }

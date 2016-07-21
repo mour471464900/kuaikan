@@ -27,7 +27,7 @@
             android:layout_toRightOf="@+id/iv_line"
             android:layout_marginLeft="5dp"/>
         <TextView
-            android:id="@+id/iv_array_to"
+            android:id="@+id/tv_array_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10dp"

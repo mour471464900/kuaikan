@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.adapter.OpusBeanAdapter;
@@ -24,8 +22,8 @@ import com.google.gson.Gson;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.net.IDN;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,10 +31,10 @@ import butterknife.ButterKnife;
 
 //   这是作品详情页面
 //    上面是一个背景图和上下伸缩的内容
-public class OpusActivity extends AppCompatActivity {
+public class OpusActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CustomListView listView;
-    private View footView3;
+    private View headView;
     private int id;
     private ProgressDialog dialog;
     private List<OpusBean.DataBean.ComicsBean> mList;
@@ -53,6 +51,7 @@ public class OpusActivity extends AppCompatActivity {
     @BindView(R.id.lv_cover)
     ImageView iv_cover;   //  点赞
     private OpusBean opusBean;
+    private TextView tv_array;
 
     //   条目的集合
     @Override
@@ -71,8 +70,11 @@ public class OpusActivity extends AppCompatActivity {
 
     private void initListView() {
         listView = (CustomListView) findViewById(R.id.lv_main);
-        footView3 = LayoutInflater.from(this).inflate(R.layout.item_opus_lv_head, null);
-        listView.addHeaderView(footView3);
+        headView = LayoutInflater.from(this).inflate(R.layout.item_opus_lv_head, null);
+        listView.addHeaderView(headView);
+//        倒序按钮
+        tv_array =(TextView) headView.findViewById(R.id.tv_array_to);
+        tv_array.setOnClickListener(this);
 //    设置信信息
         initDialog();
         //        初始化数据
@@ -157,5 +159,14 @@ public class OpusActivity extends AppCompatActivity {
     //     返回键的设置
     public void Click(View view) {
         finish();
+    }
+
+//     点击之后  条目的顺序改变
+    @Override
+    public void onClick(View v) {
+//        倒序集合
+        Collections.reverse(mList);
+//         适配器刷新
+        opusBeanAdapter.notifyDataSetChanged();
     }
 }

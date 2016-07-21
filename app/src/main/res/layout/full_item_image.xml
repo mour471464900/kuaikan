@@ -3,9 +3,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--android:adjustViewBounds="true"
+          android:scaleType="fitXY"
+         一定要在一起使用
+         adjustviewBounds 是不改变图片的 纵横比
+    -->
     <ImageView
         android:id="@+id/iv_full_image"
-        android:scaleType="fitXY"
+         android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

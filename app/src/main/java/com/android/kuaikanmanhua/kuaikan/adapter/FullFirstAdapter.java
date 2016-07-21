@@ -41,6 +41,5 @@ public class FullFirstAdapter extends CommonAdapter<String> {
                 .memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE)
                 .placeholder(R.drawable.ic_common_placeholder_l)
                 .into(imageview);
-
     }
 }
