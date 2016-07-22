@@ -178,7 +178,7 @@ public class MainUpdateFragment extends Fragment {
         for (int i = 0; i <urlNum.length ; i++) {
             Bundle bundle=new Bundle();
             bundle.putInt("id",urlNum[i]);
-            Fragment fragment=SevenDayFragment.newInstance(bundle);
+            Fragment fragment=NewSevenFragment.newInstance(bundle);
             mList.add(fragment);
         }
         return mList;

@@ -1,5 +1,6 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
+
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,18 +11,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.kuaikanmanhua.kuaikan.R;
 import com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity;
 import com.android.kuaikanmanhua.kuaikan.activity.FullscreenActivity;
@@ -33,41 +33,40 @@ import com.android.kuaikanmanhua.kuaikan.common.SevenDayUrl;
 import com.android.kuaikanmanhua.kuaikan.util.IOKCallBack;
 import com.android.kuaikanmanhua.kuaikan.util.OkHttpTool;
 import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 这是显示页面开场，
- * 七天页面的fragment
- * ，今天，昨天，动态
+ * 在这个地方使用的下拉加载更多的是一个圆球的效果
  */
-public class SevenDayFragment extends Fragment {
+public class NewSevenFragment extends Fragment {
+
+    @BindView(R.id.refresh_view)
+    SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.list_view)
+    ListView refreshableView;
+    ProgressDialog dialog;
     private int id;
     //    通过id 来动态的获取 url
     private SevenDayBean sevenDayBean;
     //    sevenday的实体类
-    private ProgressDialog dialog;
-
     private List<SevenDayBean.DataBean.ComicsBean> mList = new ArrayList<>();
     //    实现的实体类
-    @BindView(R.id.pull_to_refresh_listview)
-    PullToRefreshListView mListView;
     private SevenAdapter sevenAdapter;
     private View footView;
-    private ListView refreshableView;
 
-    public static SevenDayFragment newInstance(Bundle args) {
-        SevenDayFragment fragment = new SevenDayFragment();
+    public static NewSevenFragment newInstance(Bundle args) {
+        NewSevenFragment fragment = new NewSevenFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -82,18 +81,28 @@ public class SevenDayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_seven_day, container, false);
+        View view=inflater.inflate(R.layout.fragment_new_seven, container, false);
         ButterKnife.bind(this, view);
+//       进入页面就自动转圈
+        autoRefresh();
+        //        设置listview
         setupListView();
-//        设置listview
-        return view;
+
+        return  view;
     }
 
-    //
+    private void autoRefresh() {
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
+    }
+
     private void setupListView() {
-        refreshableView = mListView.getRefreshableView();
-        initDialog();
-//    出书啊弹窗
+//     当进入程序的时候设置自动刷新
+
         initData();
 //      初始化数据
         initAdapter();
@@ -106,27 +115,51 @@ public class SevenDayFragment extends Fragment {
 //        刷新的监听
         initClickListener();
 //        点击监听
+//        对listview 的滑动监听
+//       initLastRefresh();
     }
 
-    //     item 的点击监听
-    private void initClickListener() {
-        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+    private void initData() {
+        refreshLayout.setColorSchemeColors(Color.YELLOW);
+        OkHttpTool.newInstance().start(SevenDayUrl.DAY_START + id + SevenDayUrl.DAY_END).callback(new IOKCallBack() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), FullscreenActivity.class);
-                intent.putExtra("id", mList.get(position - 1).getId());
-                startActivity(intent);
-//               这个要跳转到观看漫画的activity，是一个全屏的activity
+            public void success(String result) {
+                Gson gson = new Gson();
+//                加载界面的实体类
+                sevenDayBean = gson.fromJson(result, SevenDayBean.class);
+                if (sevenDayBean != null && sevenDayBean.getData() != null) {
+                    mList.addAll(sevenDayBean.getData().getComics());
+                    sevenAdapter.notifyDataSetChanged();
+                    refreshLayout.setRefreshing(false);
+                }
             }
         });
     }
 
+    private void initAdapter() {
+        sevenAdapter = new SevenAdapter(getActivity(),
+                R.layout.item_seven_fragment_listview, mList);
+    }
+
+    private void bindAdapter() {
+        refreshableView.setAdapter(sevenAdapter);
+//        切记使用pulltoReFreshable的时候
+//        绑定适配器的时候使用装换过来 listview
+    }
+
+    private void initFootView() {
+        footView = LayoutInflater.from(getActivity())
+                .inflate(R.layout.item_foot_seven_listview, null);
+        refreshableView.addFooterView(footView);
+    }
+
+    // 这是refrelayout的使用
     private void initRefreshListener() {
-//
-        mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                  下拉刷新
+            public void onRefresh() {
+               refreshLayout.setRefreshing(true);
                 OkHttpTool.newInstance().start(SevenDayUrl.DAY_START + id + SevenDayUrl.DAY_END).callback(new IOKCallBack() {
                     @Override
                     public void success(String result) {
@@ -139,62 +172,22 @@ public class SevenDayFragment extends Fragment {
                             mList.addAll(sevenDayBean.getData().getComics());
 //                            重新new 对象 让其获得新的加载数据
                             sevenAdapter.notifyDataSetChanged();
-//                    异步加载数据，
-                            dialog.dismiss();
-//                   dialog消失
+                            refreshLayout.setRefreshing(false);
                         }
-                        mListView.onRefreshComplete();
-//                          刷新完成之后,listview就消失
                     }
                 });
             }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-            }
         });
-
     }
 
-    private void initFootView() {
-        footView = LayoutInflater.from(getActivity())
-                .inflate(R.layout.item_foot_seven_listview, null);
-        refreshableView.addFooterView(footView);
-    }
-
-    private void initDialog() {
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("客官请骚等");
-    }
-
-    private void bindAdapter() {
-        refreshableView.setAdapter(sevenAdapter);
-//        切记使用pulltoReFreshable的时候
-//        绑定适配器的时候使用装换过来 listview
-
-    }
-
-    private void initAdapter() {
-        sevenAdapter = new SevenAdapter(getActivity(),
-                R.layout.item_seven_fragment_listview, mList);
-    }
-
-    private void initData() {
-        dialog.show();
-        OkHttpTool.newInstance().start(SevenDayUrl.DAY_START + id + SevenDayUrl.DAY_END).callback(new IOKCallBack() {
+    private void initClickListener() {
+        refreshableView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void success(String result) {
-                Gson gson = new Gson();
-//                加载界面的实体类
-                sevenDayBean = gson.fromJson(result, SevenDayBean.class);
-                if (sevenDayBean != null && sevenDayBean.getData() != null) {
-                    mList.addAll(sevenDayBean.getData().getComics());
-                    sevenAdapter.notifyDataSetChanged();
-//                    适配器刷新
-//                    异步加载数据，
-                    dialog.dismiss();
-//                   dialog消失
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), FullscreenActivity.class);
+                intent.putExtra("id", mList.get(position ).getId());
+                startActivity(intent);
+//               这个要跳转到观看漫画的activity，是一个全屏的activity
             }
         });
     }
@@ -256,12 +249,12 @@ public class SevenDayFragment extends Fragment {
             dianzhan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                     if(isChecked){
-                         dianzhan.setText("" + (bean.getLikes_count() + 1));// 当选中时点赞+1
+                    if(isChecked){
+                        dianzhan.setText("" + (bean.getLikes_count() + 1));// 当选中时点赞+1
 
-                     }else {
-                         dianzhan.setText("" + bean.getLikes_count());// 点赞取消就 回复原样
-                     }
+                    }else {
+                        dianzhan.setText("" + bean.getLikes_count());// 点赞取消就 回复原样
+                    }
                 }
             });
 //              点击评论 跳转更多的评论

@@ -23,15 +23,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    //黄油刀
-    //广告牌
-    // 圆形图片
-    //  卡片布局
-    // 毕加索
-    // 带圆角的图片
     compile project(path: ':library')
     compile files('libs/MobCommons-2016.0707.1708.jar')
-
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.android.support:design:23.4.0'
@@ -45,15 +38,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
-
-
-//     fresco图片请求
-    compile 'com.facebook.fresco:fresco:0.9.0+'
-
-//     greendao 的依赖库
     compile 'org.greenrobot:greendao:2.2.0'
-
-//    图片点击放大效果的控件
     compile 'com.bm.photoview:library:2.0.7'
-
 }

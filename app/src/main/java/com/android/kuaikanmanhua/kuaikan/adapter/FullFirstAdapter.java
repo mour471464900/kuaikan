@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.kuaikanmanhua.kuaikan.R;
-import com.android.kuaikanmanhua.kuaikan.util.ImageLoader;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 

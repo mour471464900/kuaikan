@@ -271,27 +271,20 @@ public class CommentHotFragmet extends Fragment {
 
             viewHolder.comments_count.setText("" + mlist.get(position).getComments_count());
             List<String> list = new ArrayList<>();
-            list.addAll(mlist.get(position).getContent().getImages());
-            int layoutId = 0;
-            if(list.size()==1){
-                viewHolder.gv_picture.setNumColumns(1);
-                layoutId = R.layout.comment_hot_fragment_gridview2;
-            }else {
-                viewHolder.gv_picture.setNumColumns(3);
-                layoutId = R.layout.comment_hot_fragment_gridview;
+            if(mlist.get(position).getContent().getImages()!=null){
+                list.addAll(mlist.get(position).getContent().getImages());
+                int layoutId = 0;
+                if(list.size()==1){
+                    viewHolder.gv_picture.setNumColumns(1);
+                    layoutId = R.layout.comment_hot_fragment_gridview2;
+                }else {
+                    viewHolder.gv_picture.setNumColumns(3);
+                    layoutId = R.layout.comment_hot_fragment_gridview;
+                }
+                gridViewAdapter = new HotGridViewAdapter(getActivity(),layoutId, list);
+                viewHolder.gv_picture.setAdapter(gridViewAdapter);
+                gridViewAdapter.notifyDataSetChanged();
             }
-
-//            if (list.size() != 1) {
-              //  layoutId = R.layout.comment_hot_fragment_gridview;
-//            } else {
-//                layoutId = R.layout.comment_hot_fragment_gridview2;
-//                int   colnum  =  (int) (((getResources().getDisplayMetrics().widthPixels  ))/600  );
-//                viewHolder.gv_picture.setNumColumns(colnum);
-         //   }
-            gridViewAdapter = new HotGridViewAdapter(getActivity(),layoutId, list);
-            viewHolder.gv_picture.setAdapter(gridViewAdapter);
-            gridViewAdapter.notifyDataSetChanged();
-
             return convertView;
         }
     }

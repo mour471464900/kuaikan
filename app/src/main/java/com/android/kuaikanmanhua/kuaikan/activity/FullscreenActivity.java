@@ -368,7 +368,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
     //需要登录
     private void setupLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, EnterActivity.class);
         startActivity(intent);
     }
 

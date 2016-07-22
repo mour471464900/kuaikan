@@ -1,0 +1,239 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.android.kuaikanmanhua.kuaikan.fragment.UserFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <TextView
+            android:id="@+id/tv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_background"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="70dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="登录"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/iv_user_picture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_above="@id/tv_user_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_personal_headportrait" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_information"
+        style="@style/userLinerLayout"
+        >
+        <ImageView
+           style="@style/useImageView"
+            android:src="@drawable/ic_me_item_message" />
+
+        <TextView
+          style="@style/useTextView"
+            android:text="我的消息"
+            />
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_listitem_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_watch"
+        style="@style/userLinerLayout"
+        >
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_me_item_follow" />
+
+        <TextView
+            style="@style/useTextView"
+            android:text="我的关注"
+            />
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_listitem_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_updata"
+        style="@style/userLinerLayout"
+        >
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_me_item_update_push" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更新提醒"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+
+                android:text="关注作品更新后将及时提醒" />
+        </LinearLayout>
+
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            style="@style/custom_updata"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_collect"
+        style="@style/userLinerLayout"
+        >
+
+        <ImageView
+
+            style="@style/useImageView"
+            android:src="@drawable/ic_me_item_collection" />
+
+        <TextView
+            style="@style/useTextView"
+            android:text="我的收藏"
+            />
+
+        <ImageView
+            style="@style/useImageView"
+
+            android:src="@drawable/ic_listitem_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_ai"
+        style="@style/userLinerLayout"
+        >
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_me_item_download_comic" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="智能缓存"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="18sp"
+                android:text="下载今天已更新漫画" />
+        </LinearLayout>
+
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:checked="false"
+            android:button="@drawable/slt_ai"
+             />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/darker" />
+
+    <LinearLayout
+        android:id="@+id/ll_user_set"
+        style="@style/userLinerLayout"
+        >
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_me_item_setup" />
+
+        <TextView
+            style="@style/useTextView"
+            android:text="设置"
+            />
+
+        <ImageView
+            style="@style/useImageView"
+            android:src="@drawable/ic_listitem_next" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/darker" />
+
+</LinearLayout>

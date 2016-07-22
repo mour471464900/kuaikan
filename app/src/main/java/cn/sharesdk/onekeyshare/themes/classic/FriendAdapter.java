@@ -272,7 +272,7 @@ public class FriendAdapter extends PullToRequestListAdapter implements PlatformA
 		public String description;
 		public String uid;
 		public String icon;
-		//@Name 用于微博等提示或关联某个人
+		//@ 用于微博等提示或关联某个人
 		public String atName;
 	}
 

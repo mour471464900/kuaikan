@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kuaikan</string>
+    <string name="app_name">快看漫画</string>
     <string name="follow_login">没有登录,超多精彩内容看不鸟</string>
     <string name="clean_data">清空搜索历史</string>
     <string name="empty">没有结果</string>
