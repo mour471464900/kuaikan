@@ -62,7 +62,6 @@ public class CommentZuiXinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.comment_hot_fragment,container,false);
         ButterKnife.bind(this,view);
-        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         refreshableView = pullToRefreshListView.getRefreshableView();
         //初始化数据
         initData();
@@ -87,34 +86,32 @@ public class CommentZuiXinFragment extends Fragment {
     }
 
     private void initRefreshListen() {
+        //下拉重新加载
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-                OkHttpTool.newInstance().start(SevenDayUrl.getUrl_comment_hot_refresh).callback(new IOKCallBack() {
+                OkHttpTool.newInstance().start(SevenDayUrl.URL_COMMENT_RECENTLY).callback(new IOKCallBack() {
                     @Override
                     public void success(String result) {
                         Gson gson = new Gson();
                         CommentZuiXinBean mbean = gson.fromJson(result, CommentZuiXinBean.class);
                         if (result != null && mbean != null) {
+                            mlist.clear();
+//                            重新加载
                             mlist.addAll(mbean.getData().getFeeds());
                             ZXAdapter.notifyDataSetChanged();
                             pullToRefreshListView.onRefreshComplete();
                         }
                     }
                 });
-
-
-
             }
-
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
             }
         });
 
-
+//           下拉直接加载更多
         pullToRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
@@ -133,8 +130,6 @@ public class CommentZuiXinFragment extends Fragment {
 
                         }
                     });
-
-
                 }
 
             }

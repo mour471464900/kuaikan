@@ -224,7 +224,7 @@ public class NewSevenFragment extends Fragment {
 //            lable.setBackgroundColor(Color.parseColor(bean.getLabel_color()));
 //             改变颜色
             Drawable background = lable.getBackground();
-//bean.getLabel_color()这是一个十六进制的颜色配置    "label_color":"#fa6499",
+           //bean.getLabel_color()这是一个十六进制的颜色配置    "label_color":"#fa6499",
             background.setColorFilter(Color.parseColor(bean.getLabel_color()), PorterDuff.Mode.SRC);
             //这个是颜色过滤器，来改变drawable 的颜色
             top_title.setText(bean.getTopic().getTitle());

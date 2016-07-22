@@ -27,6 +27,6 @@ public class HotGridViewAdapter extends CommonAdapter<String> {
     public void convert(ViewHolderM holderM, String bean) {
         ImageView imageView=holderM.getView(R.id.iv_hot_gridview);
         Picasso.with(context).load(SevenDayUrl.COMMENT_START+
-                bean+SevenDayUrl.COMMENT_END).into(imageView);
+                bean+SevenDayUrl.COMMENT_END).placeholder(R.mipmap.ic_launcher_mine).into(imageView);
     }
 }

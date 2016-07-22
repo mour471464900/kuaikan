@@ -64,7 +64,6 @@ public class CommentHotFragmet extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.comment_hot_fragment, container, false);
         ButterKnife.bind(this, view);
-        pullToRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         refreshableView = pullToRefreshListView.getRefreshableView();
         initRefreshListen();
         //初始化数据
@@ -96,12 +95,14 @@ public class CommentHotFragmet extends Fragment {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-                OkHttpTool.newInstance().start(SevenDayUrl.getUrl_comment_hot_refresh).callback(new IOKCallBack() {
+                OkHttpTool.newInstance().start(SevenDayUrl.URL_COMMENT_HOT).callback(new IOKCallBack() {
                     @Override
                     public void success(String result) {
                         Gson gson = new Gson();
                         CommentHotBean mbean = gson.fromJson(result, CommentHotBean.class);
                         if (result != null && mbean != null) {
+//                            下拉重新加载数据
+                            mlist.clear(); //清空数据
                             mlist.addAll(mbean.getData().getFeeds());
                             hotAdapter.notifyDataSetChanged();
                             pullToRefreshListView.onRefreshComplete();
@@ -158,8 +159,6 @@ public class CommentHotFragmet extends Fragment {
 
 
     private void initData() {
-
-
         OkHttpTool.newInstance().start(SevenDayUrl.URL_COMMENT_HOT).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
@@ -167,11 +166,8 @@ public class CommentHotFragmet extends Fragment {
                 CommentHotBean bean = gson.fromJson(result, CommentHotBean.class);
                 if (result != null && bean != null) {
                     mlist.addAll(bean.getData().getFeeds());
-
-
                     hotAdapter.notifyDataSetChanged();
                 }
-
             }
         });
     }
