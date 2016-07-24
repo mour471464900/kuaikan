@@ -35,6 +35,7 @@ public class NewUpdateFragment extends Fragment {
 //           ，动态1      ,动态2,         动态3,       动态4,      动态5    ，昨天   今天
     };
 
+
     private  String nowData(){
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         String now=sdf.format(new Date());
