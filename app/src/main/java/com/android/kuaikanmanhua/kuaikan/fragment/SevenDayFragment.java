@@ -1,5 +1,6 @@
 package com.android.kuaikanmanhua.kuaikan.fragment;
 
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -62,6 +66,9 @@ public class SevenDayFragment extends Fragment {
     private SevenAdapter sevenAdapter;
     private View footView;
     private ListView refreshableView;
+    private CheckBox dianzhan;
+    private CheckBox pinlun;
+
 
     public static SevenDayFragment newInstance(Bundle args) {
         SevenDayFragment fragment = new SevenDayFragment();
@@ -222,8 +229,8 @@ public class SevenDayFragment extends Fragment {
             TextView top_title = (TextView) holderM.getView(R.id.tv_seven_top_title);
             TextView top_avatar = (TextView) holderM.getView(R.id.tv_seven_top_avatar);
             TextView bottom_title = (TextView) holderM.getView(R.id.tv_seven_bottom_title);
-            final CheckBox dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
-            final CheckBox pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
+            dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
+            pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
             ImageView cover = (ImageView) holderM.getView(R.id.iv_seven_cover);
 //            改变Ui控件
 //            --------------------
@@ -256,14 +263,17 @@ public class SevenDayFragment extends Fragment {
             dianzhan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    AnimationSet animationSet=new AnimationSet(true);
                      if(isChecked){
                          dianzhan.setText("" + (bean.getLikes_count() + 1));// 当选中时点赞+1
-
+                         dianzhan.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.cb_anim));
                      }else {
                          dianzhan.setText("" + bean.getLikes_count());// 点赞取消就 回复原样
                      }
                 }
             });
+
+
 //              点击评论 跳转更多的评论
             pinlun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

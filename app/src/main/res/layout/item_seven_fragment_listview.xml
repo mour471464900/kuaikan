@@ -81,12 +81,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5095"
-            style="@style/custom_dianzhan"
+            android:button="@drawable/seletor_dianzhan"
             android:layout_marginRight="10dp"
             android:checked="false" />
         <CheckBox
             android:id="@+id/tv_seven_pinlun"
-            style="@style/custom_pinlun"
+            android:button="@drawable/selector_pinlun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1726"/>

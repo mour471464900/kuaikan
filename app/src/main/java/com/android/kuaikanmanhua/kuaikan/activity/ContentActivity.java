@@ -149,10 +149,10 @@ public class ContentActivity extends AppCompatActivity {
 //        super.onSaveInstanceState(outState);
     }
 
-
+//             当横竖屏切换的时候就让，
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        switchFragment(0);
+        switchFragment(preIndex);
         super.onRestoreInstanceState(savedInstanceState);
     }
 }

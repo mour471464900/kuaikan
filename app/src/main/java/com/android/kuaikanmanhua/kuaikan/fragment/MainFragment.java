@@ -82,7 +82,8 @@ public class MainFragment extends Fragment {
     private void initFragment() {
         MainFollowFragment fragment1 = MainFollowFragment.newInstance(null);
         //关注的fragment
-        MainUpdateFragment fragment2 = MainUpdateFragment.newInstance(null);
+        NewUpdateFragment fragment2 = NewUpdateFragment.newInstance(null);
+//         MainUpdateFragment fragment2=MainUpdateFragment.newInstance(null);
 //        更新的fragment
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);

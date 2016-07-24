@@ -52,7 +52,7 @@ public class NewSevenFragment extends Fragment {
     @BindView(R.id.list_view)
     ListView refreshableView;
     ProgressDialog dialog;
-    private int id;
+    private long id;
     //    通过id 来动态的获取 url
     private SevenDayBean sevenDayBean;
     //    sevenday的实体类
@@ -60,6 +60,9 @@ public class NewSevenFragment extends Fragment {
     //    实现的实体类
     private SevenAdapter sevenAdapter;
     private View footView;
+    private CheckBox dianzhan;
+    private CheckBox pinlun;
+
 
     public static NewSevenFragment newInstance(Bundle args) {
         NewSevenFragment fragment = new NewSevenFragment();
@@ -73,7 +76,8 @@ public class NewSevenFragment extends Fragment {
         super.onAttach(context);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            id = bundle.getInt("id", 0);
+            id = bundle.getLong("id", 0);
+
         }
 //        将外部导入的bundle 传入到此fragment中去
     }
@@ -92,12 +96,6 @@ public class NewSevenFragment extends Fragment {
     }
 
     private void autoRefresh() {
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-            }
-        });
     }
 
     private void setupListView() {
@@ -131,7 +129,6 @@ public class NewSevenFragment extends Fragment {
                 if (sevenDayBean != null && sevenDayBean.getData() != null) {
                     mList.addAll(sevenDayBean.getData().getComics());
                     sevenAdapter.notifyDataSetChanged();
-                    refreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -215,8 +212,8 @@ public class NewSevenFragment extends Fragment {
             TextView top_title = (TextView) holderM.getView(R.id.tv_seven_top_title);
             TextView top_avatar = (TextView) holderM.getView(R.id.tv_seven_top_avatar);
             TextView bottom_title = (TextView) holderM.getView(R.id.tv_seven_bottom_title);
-            final CheckBox dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
-            final CheckBox pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
+             dianzhan = (CheckBox) holderM.getView(R.id.tv_seven_dianzhan);
+             pinlun = (CheckBox) holderM.getView(R.id.tv_seven_pinlun);
             ImageView cover = (ImageView) holderM.getView(R.id.iv_seven_cover);
 //            改变Ui控件
 //            --------------------

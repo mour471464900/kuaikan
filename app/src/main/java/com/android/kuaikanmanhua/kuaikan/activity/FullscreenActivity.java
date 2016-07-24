@@ -6,10 +6,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -81,6 +83,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     private TextView more;
     private TextView title;
     private TextView allComic;
+    private SwipeRefreshLayout refresh_layout;
 //      漫画的对象
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -90,15 +93,43 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_fullscreen);
 //         sharesdk的初始化要在oncreate方法 里面
         ShareSDK.initSDK(FullscreenActivity.this);
+//        刷新的页面
+
+        //        设置listview
         setupListView();
-//        设置listview
+        //       设值刷新
+        setRefresh();
+
+    }
+
+    private void setRefresh() {
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                      下拉刷新重新加载数据
+                OkHttpTool.newInstance().start(URLConstants.URL_FULL_WATCH + id).callback(new IOKCallBack() {
+                    @Override
+                    public void success(String result) {
+                        Gson gson = new Gson();
+                        fullWatchBean = gson.fromJson(result, FullWatchBean.class);
+                        if (fullWatchBean != null && fullWatchBean.getData() != null) {
+                            images.clear();
+                            images.addAll(fullWatchBean.getData().getImages());
+                            fullFirstAdapter.notifyDataSetChanged();
+//                            加载完成就让进度条消失
+                            refresh_layout.setRefreshing(false);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void setupListView() {
         initBundle();
 //        初始化bundle
 //    设置信息
-        initDialog();
+//        initDialog();
         initData();
 //        初始化数据
         initView();
@@ -107,16 +138,16 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 //        初始化适配器
         bindAdapter();
 //        绑定适配器
+
         initListener();
 //        初始化监听
         //        加载头部和底部视图
         bindHeardFootView();
+//        刷新页面控件
+
     }
 
-    private void initDialog() {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("客官请骚等");
-    }
+
 
     private void bindHeardFootView() {
         mContentView.addHeaderView(header);
@@ -146,6 +177,9 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
     }
 
     private void initView() {
+        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        refresh_layout.setColorSchemeColors(Color.YELLOW);
+
         title = (TextView) findViewById(R.id.tv_check_all_title); //标题
 
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -157,8 +191,9 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
 //         点击全集的text
         allComic = (TextView) findViewById(R.id.tv_check_all);
+        //        初始化头部和尾的视图
         initHeardFootView();
-//        初始化头部和尾的视图
+
     }
 
     //      初始化头部和底部
@@ -210,13 +245,11 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
         share.setOnClickListener(this);
 //        一键 分享的功能
         more.setOnClickListener(this);
-
         allComic.setOnClickListener(this);
     }
 
     //          通过网络请求得到图片的集合
     private void initData() {
-        dialog.show();
         if (id != 0) {
             images = new ArrayList<>();
             OkHttpTool.newInstance().start(URLConstants.URL_FULL_WATCH + id).callback(new IOKCallBack() {
@@ -227,7 +260,6 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
                     if (fullWatchBean != null && fullWatchBean.getData() != null) {
                         images.addAll(fullWatchBean.getData().getImages());
                         fullFirstAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
                         setupHFUI();
                     }
                 }
@@ -251,6 +283,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
                             FootAdapter footAdapter = new FootAdapter();
                             footListView.setAdapter(footAdapter);
                             footAdapter.notifyDataSetChanged();
+
                         }
                     }
                 });
@@ -368,7 +401,7 @@ public class FullscreenActivity extends Activity implements View.OnClickListener
 
     //需要登录
     private void setupLogin() {
-        Intent intent = new Intent(this, EnterActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

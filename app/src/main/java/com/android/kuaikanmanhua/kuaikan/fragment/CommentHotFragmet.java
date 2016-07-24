@@ -21,6 +21,7 @@ import com.android.kuaikanmanhua.kuaikan.activity.CommentContextActivity;
 import com.android.kuaikanmanhua.kuaikan.activity.CommentIconActivity;
 import com.android.kuaikanmanhua.kuaikan.activity.CommentReplyActivity;
 import com.android.kuaikanmanhua.kuaikan.adapter.HotGridViewAdapter;
+import com.android.kuaikanmanhua.kuaikan.adapter.NewCommentAdapter;
 import com.android.kuaikanmanhua.kuaikan.bean.CommentHotBean;
 import com.android.kuaikanmanhua.kuaikan.common.SevenDayUrl;
 import com.android.kuaikanmanhua.kuaikan.custom.CustomGridView;
@@ -109,8 +110,6 @@ public class CommentHotFragmet extends Fragment {
                         }
                     }
                 });
-
-
             }
 
             @Override
@@ -123,7 +122,6 @@ public class CommentHotFragmet extends Fragment {
         pullToRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
-
                 if (res) {
                     OkHttpTool.newInstance().start(SevenDayUrl.getUrl_comment_hot_refresh).callback(new IOKCallBack() {
                         @Override
@@ -135,11 +133,8 @@ public class CommentHotFragmet extends Fragment {
                                 hotAdapter.notifyDataSetChanged();
                                 pullToRefreshListView.onRefreshComplete();
                             }
-
                         }
                     });
-
-
                 }
                 res = false;
             }
@@ -208,9 +203,8 @@ public class CommentHotFragmet extends Fragment {
                 viewHolder.tv_name = (TextView) convertView.findViewById(R.id.iv_comment_hot_name);
                 viewHolder.tv_context = (TextView) convertView.findViewById(R.id.tv_hot_text);
                 viewHolder.gv_picture = (CustomGridView) convertView.findViewById(R.id.gv_hot_picture);
-
                 viewHolder.tv_data = (TextView) convertView.findViewById(R.id.tv_hot_data);
-                 viewHolder.likes_count = (CheckBox) convertView.findViewById(R.id.tv_hot_likes_count);
+                viewHolder.likes_count = (CheckBox) convertView.findViewById(R.id.tv_hot_likes_count);
                 viewHolder.comments_count = (CheckBox) convertView.findViewById(R.id.tv_hot_comments_count);
 
                 convertView.setTag(viewHolder);
@@ -218,13 +212,13 @@ public class CommentHotFragmet extends Fragment {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             }
-           //头像监听跳转到CommentIconActivity
+            //头像监听跳转到CommentIconActivity
             viewHolder.iv_show.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int postion= (int) v.getTag();
-                    Intent intent=new Intent(getActivity(), CommentIconActivity.class);
-                    intent.putExtra("bean",mlist.get(position).getUser().getId());
+                    int postion = (int) v.getTag();
+                    Intent intent = new Intent(getActivity(), CommentIconActivity.class);
+                    intent.putExtra("bean", mlist.get(position).getUser().getId());
                     startActivity(intent);
                 }
             });
@@ -240,10 +234,10 @@ public class CommentHotFragmet extends Fragment {
             viewHolder.comments_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int postion= (int) buttonView.getTag();
-                    Intent intent=new Intent(getActivity(),CommentReplyActivity.class);
+                    int postion = (int) buttonView.getTag();
+                    Intent intent = new Intent(getActivity(), CommentReplyActivity.class);
 //        调到回复ACtivity
-                    intent.putExtra("id",mlist.get(position).getFeed_id());
+                    intent.putExtra("id", mlist.get(position).getFeed_id());
                     startActivity(intent);
                 }
             });
@@ -254,10 +248,10 @@ public class CommentHotFragmet extends Fragment {
             viewHolder.likes_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                      int postion= (int) buttonView.getTag();
-                        buttonView.setText("" + (mlist.get(position).getLikes_count()+1));
-                    }else {
+                    if (isChecked) {
+                        int postion = (int) buttonView.getTag();
+                        buttonView.setText("" + (mlist.get(position).getLikes_count() + 1));
+                    } else {
                         buttonView.setText("" + mlist.get(position).getLikes_count());
                     }
                 }
@@ -267,17 +261,17 @@ public class CommentHotFragmet extends Fragment {
 
             viewHolder.comments_count.setText("" + mlist.get(position).getComments_count());
             List<String> list = new ArrayList<>();
-            if(mlist.get(position).getContent().getImages()!=null){
+            if (mlist.get(position).getContent().getImages() != null) {
                 list.addAll(mlist.get(position).getContent().getImages());
                 int layoutId = 0;
-                if(list.size()==1){
+                if (list.size() == 1) {
                     viewHolder.gv_picture.setNumColumns(1);
                     layoutId = R.layout.comment_hot_fragment_gridview2;
-                }else {
+                } else {
                     viewHolder.gv_picture.setNumColumns(3);
                     layoutId = R.layout.comment_hot_fragment_gridview;
                 }
-                gridViewAdapter = new HotGridViewAdapter(getActivity(),layoutId, list);
+                gridViewAdapter = new HotGridViewAdapter(getActivity(), layoutId, list);
                 viewHolder.gv_picture.setAdapter(gridViewAdapter);
                 gridViewAdapter.notifyDataSetChanged();
             }
@@ -291,7 +285,7 @@ public class CommentHotFragmet extends Fragment {
         TextView tv_name;
         CustomGridView gv_picture;
         TextView tv_data;
-          CheckBox likes_count;
+        CheckBox likes_count;
         CheckBox comments_count;
 
     }

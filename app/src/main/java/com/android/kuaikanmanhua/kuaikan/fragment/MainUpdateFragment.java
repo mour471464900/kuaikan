@@ -23,10 +23,17 @@ import butterknife.ButterKnife;
  */
 public class MainUpdateFragment extends Fragment {
 
-    private int[] urlNum = {
+    private int  [] urlNum = {
             1467993600, 1467907200, 1467820800, 1467734400, 1467648000,   1,    0
 //           ，动态1      ,动态2,         动态3,       动态4,      动态5    ，昨天   今天
     };
+
+    private  String nowData(){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String now=sdf.format(new Date());
+         return  now;
+    }
+
 
 //    周一到  周日  让 title 显示不同天数的数组
     private String[] day1={"周二","周三","周四","周五","周六","昨天","今天"};

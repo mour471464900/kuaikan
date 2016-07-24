@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.kuaikanmanhua.kuaikan.R;
-import com.android.kuaikanmanhua.kuaikan.activity.EnterActivity;
+import com.android.kuaikanmanhua.kuaikan.activity.LoginActivity;
+
 
 /**
  *
@@ -42,7 +43,7 @@ public class MainFollowFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), EnterActivity.class);
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
             }
         });
